@@ -1,0 +1,2 @@
+# InSpec Profile - Telnet
+
