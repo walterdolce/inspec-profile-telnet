@@ -1,1 +1,9 @@
 ---
+name: telnet
+title: Telnet InSpec Profile
+maintainer: Walter Dolce
+copyright: Walter Dolce
+copyright_email: walterdolce@gmail.com
+license: Apache License 2.0
+summary: Verifies whether telnet is enabled on the system
+version: 0.1.0
