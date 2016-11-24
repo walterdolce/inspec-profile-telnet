@@ -7,3 +7,7 @@ copyright_email: walterdolce@gmail.com
 license: Apache License 2.0
 summary: Verifies whether telnet is enabled on the system
 version: 0.1.0
+supports:
+ - os-name: mac_os_x
+   os-family: darwin
+   release: 10.10.5
