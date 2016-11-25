@@ -1,0 +1,15 @@
+DEPENDENCIES
+  gcc-installer
+    path: test/cookbooks/gcc-installer
+  make-installer
+    path: test/cookbooks/make-installer
+  ruby-installer
+    path: test/cookbooks/ruby-installer
+  telnet-installer
+    path: test/cookbooks/telnet-installer
+
+GRAPH
+  gcc-installer (0.1.0)
+  make-installer (0.1.0)
+  ruby-installer (0.1.0)
+  telnet-installer (0.1.0)

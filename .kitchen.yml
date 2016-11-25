@@ -1,0 +1,19 @@
+---
+driver:
+  name: docker
+  <% if ENV['TRAVIS'] %>
+  privileged: true
+  <% end %>
+  volume:
+    - <%= Dir.pwd %>:/tmp/inspec-profile
+
+platforms:
+  - name: ubuntu
+
+suites:
+  - name: with-telnet
+    run_list:
+      - recipe[gcc-installer::default]
+      - recipe[make-installer::default]
+      - recipe[ruby-installer::default]
+      - recipe[telnet-installer::default]
