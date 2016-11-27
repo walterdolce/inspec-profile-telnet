@@ -8,7 +8,7 @@ When(/^an executable "([^"]*)" is found in PATH on the node$/) do |executable_na
   expect($?.exitstatus).to eq 0
 end
 
-Then(/^InSpec's compliance checks will fail$/) do
+Then(/^InSpec's compliance checks fail$/) do
   `inspec exec /tmp/inspec-profile`
   expect($?.exitstatus).to_not eq 0
 end

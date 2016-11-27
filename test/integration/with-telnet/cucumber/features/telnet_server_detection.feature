@@ -4,6 +4,6 @@ Feature: Telnet server detection
   I want InSpec to fail the compliance checks if it detect one
 
   Scenario: InSpec fails compliance checks when the telnet server is installed on the system
-    When the telnet server is installed on the node
-    Then InSpec's compliance checks will fail
-
+    Given the telnet server is installed on the node
+    When a telnet server executable is found in PATH on the node
+    Then InSpec's compliance checks fail
