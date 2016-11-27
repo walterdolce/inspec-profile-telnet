@@ -9,4 +9,4 @@ summary: Verifies whether telnet is enabled on the system
 version: 0.2.0
 supports:
  - os-family: darwin
-
+ - os-name: ubuntu

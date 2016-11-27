@@ -5,16 +5,18 @@ title 'telnet service'
 
 control 'telnet-service' do
   impact 1.0
-  title 'Prevent use of the telnet service'
-  desc 'Verifies the status of the telnet service'
+  title 'Prevents use of the telnet service'
+  desc 'Verifies the status of the telnet service on the node'
   
   tag 'production', 'development'
   tag 'telnet', 'protocol'
-  tag 'service'
+  tag 'server', 'service'
   
-  describe service('com.apple.telnetd') do
-    it { should_not be_installed }
-    it { should_not be_enabled }
-    it { should_not be_running }
+  %w(com.apple.telnetd telnetd in.telnetd).each do |service_name|
+    describe service(service_name) do
+      it { should_not be_installed }
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
   end
 end
