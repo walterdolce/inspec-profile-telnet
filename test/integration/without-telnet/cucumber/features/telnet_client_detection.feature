@@ -3,10 +3,10 @@ Feature: Telnet client detection
   As a system administrator and business owner
   I want InSpec to fail the compliance checks if it detect one
 
-  Scenario Outline: InSpec fails compliance checks when a telnet executable is found in PATH
-    Given the telnet client is installed on the node
-    When the executable "<telnet_executable>" is found in PATH on the node
-    Then InSpec's compliance checks fail
+  Scenario Outline: InSpec doesn't fail compliance checks when a telnet executable is not found in PATH
+    Given the telnet client is not installed on the node
+    When the executable "<telnet_executable>" is not found in PATH on the node
+    Then InSpec's compliance checks don't fail
 
     Examples:
       | telnet_executable |
