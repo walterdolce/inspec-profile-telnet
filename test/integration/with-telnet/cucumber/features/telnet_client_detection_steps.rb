@@ -3,7 +3,7 @@ Given(/^the telnet client is installed on the node$/) do
   expect($?.exitstatus).to eq 0
 end
 
-When(/^an executable "([^"]*)" is found in \$PATH on the node$/) do |executable_name|
+When(/^an executable "([^"]*)" is found in PATH on the node$/) do |executable_name|
   `which #{executable_name}`
   expect($?.exitstatus).to eq 0
 end

@@ -1,0 +1,1 @@
+- Ensure there's no "telnet" symlink in /etc/alternatives
