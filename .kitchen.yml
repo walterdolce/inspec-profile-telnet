@@ -13,7 +13,8 @@ platforms:
 suites:
   - name: with-telnet
     run_list:
-      - recipe[gcc-installer::default]
-      - recipe[make-installer::default]
-      - recipe[ruby-installer::default]
+      - recipe[git-installer::default]  # Remove once https://github.com/chef/inspec/pull/1327 has been merged and released
+      - recipe[gcc-installer::default]  # Required to install InSpec in the container
+      - recipe[make-installer::default] # Required to install InSpec in the container
+      - recipe[ruby-installer::default] # Required to install InSpec in the container
       - recipe[telnet-installer::default]

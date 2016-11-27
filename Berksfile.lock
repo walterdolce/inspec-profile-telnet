@@ -1,6 +1,8 @@
 DEPENDENCIES
   gcc-installer
     path: test/cookbooks/gcc-installer
+  git-installer
+    path: test/cookbooks/git-installer
   make-installer
     path: test/cookbooks/make-installer
   ruby-installer
@@ -10,6 +12,7 @@ DEPENDENCIES
 
 GRAPH
   gcc-installer (0.1.0)
+  git-installer (0.1.0)
   make-installer (0.1.0)
   ruby-installer (0.1.0)
   telnet-installer (0.1.0)

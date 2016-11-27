@@ -7,12 +7,7 @@ Given(/^the telnet client is installed on the node$/) do
   expect($?.exitstatus).to eq 0
 end
 
-When(/^I run InSpec on the node$/) do
-  ::STDOUT.puts `pwd`
-  ::STDOUT.puts `ls /tmp/inspec-profile`
-  ::STDOUT.puts `inspec check /tmp/inspec-profile`
-end
-
-Then(/^it fails the compliance checks$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+When(/^InSpec's compliance checks will fail$/) do
+  `inspec exec /tmp/inspec-profile`
+  expect($?.exitstatus).to_not eq 0
 end

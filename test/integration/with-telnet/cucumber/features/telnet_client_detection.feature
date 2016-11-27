@@ -4,8 +4,7 @@ Feature: Telnet client detection
   I want InSpec to fail the compliance checks if it detect one
 
   Scenario: InSpec fails compliance checks when the telnet client is installed on the system
-    Given I provision the node
-    And the telnet client is installed on the node
-    When I run InSpec on the node
-    Then it fails the compliance checks
+    Given the telnet client is installed on the node
+    When I provision the node
+    Then InSpec's compliance checks will fail
 
