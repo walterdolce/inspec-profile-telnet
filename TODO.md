@@ -1,0 +1,2 @@
+- Implement logic to parse xinetd config files so to detect telnet related config
+- Implement logic to parse inetd config files so to detect telnet related config
