@@ -1,5 +1,7 @@
 require 'rspec'
 require_relative './token'
+require_relative '../xinetd_config/token/comment_token'
+require_relative '../xinetd_config/token/service_token'
 
 module XinetdConfig
   class Lexer
@@ -18,7 +20,11 @@ module XinetdConfig
           if line[0] == '#'
             token = Token::CommentToken.new(line)
           else
-            token = Token::Base.new(line)
+            if line.match(/^service/)
+              token = Token::ServiceToken.new(line)
+            else
+              token = Token::Base.new(line)
+            end
           end
           @tokens << token
         end

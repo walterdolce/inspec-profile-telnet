@@ -18,15 +18,15 @@ describe XinetdConfig::Lexer do
   end
 
   it 'returns an empty list of tokens when the tokenized configuration files content result empty' do
-    lexer = XinetdConfig::Lexer.new(<<configuration
+    lexer = XinetdConfig::Lexer.new(<<CONFIGURATION_CONTENT
 
 
-configuration
+CONFIGURATION_CONTENT
     )
     expect(lexer.tokenize).to eq []
   end
 
-  it 'returns a list containing instances of token objects representing the tokenized configuration components' do
+  it 'returns lists containing instances of token objects representing the tokenized configuration components' do
     lexer = XinetdConfig::Lexer.new(<<CONFIGURATION_CONTENT
 
     # I am a comment
@@ -35,6 +35,17 @@ CONFIGURATION_CONTENT
     tokens = lexer.tokenize
     expect(tokens).to_not eq []
     expect(tokens[0]).to be_kind_of XinetdConfig::Token::CommentToken
+
+    lexer = XinetdConfig::Lexer.new(<<CONFIGURATION_CONTENT
+
+    # I am a comment
+service
+CONFIGURATION_CONTENT
+    )
+    tokens = lexer.tokenize
+    expect(tokens).to_not eq []
+    expect(tokens[0]).to be_kind_of XinetdConfig::Token::CommentToken
+    expect(tokens[1]).to be_kind_of XinetdConfig::Token::ServiceToken
   end
 end
 
