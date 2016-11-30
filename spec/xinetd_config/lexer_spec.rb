@@ -34,7 +34,6 @@ configuration
     )
     tokens = lexer.tokenize
     expect(tokens).to_not eq []
-    expect(tokens[0]).to be_kind_of XinetdConfig::Token::Base
     expect(tokens[0]).to be_kind_of XinetdConfig::Token::CommentToken
   end
 end
