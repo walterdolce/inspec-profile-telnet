@@ -27,10 +27,10 @@ configuration
   end
 
   it 'returns a list containing instances of token objects representing the tokenized configuration components' do
-    lexer = XinetdConfig::Lexer.new(<<configuration
+    lexer = XinetdConfig::Lexer.new(<<CONFIGURATION_CONTENT
 
     # I am a comment
-configuration
+CONFIGURATION_CONTENT
     )
     tokens = lexer.tokenize
     expect(tokens).to_not eq []
