@@ -7,8 +7,6 @@ module XinetdConfig
       def token
         raw_token.sub(/^(#)/, '').strip
       end
-      private
-        attr_writer :token
     end
   end
 end

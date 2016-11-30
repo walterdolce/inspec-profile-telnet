@@ -14,7 +14,14 @@ module XinetdConfig
     def tokenize
       @raw_configuration.each_line do |line|
         line = line.strip.chomp
-        @tokens << Token::Base.new(line) if line != ''
+        if line != ''
+          if line[0] == '#'
+            token = Token::CommentToken.new(line)
+          else
+            token = Token::Base.new(line)
+          end
+          @tokens << token
+        end
       end
       @tokens
     end
