@@ -8,3 +8,4 @@ a failure in reading its included files if any).
 message when inetd is installed BUT its configuration could not 
 be parsed (assumes a failure in reading inetd.conf and/or 
 a failure in reading its included files if any).
+- Extract the cookbooks into their own repository and then reference them directly
