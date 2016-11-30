@@ -27,14 +27,21 @@ CONFIGURATION_CONTENT
   end
 
   it 'returns lists containing instances of token objects representing the tokenized configuration components' do
-    lexer = XinetdConfig::Lexer.new(<<CONFIGURATION_CONTENT
+
+    def assert_tokenization_from(configuration, &block)
+      lexer = XinetdConfig::Lexer.new(configuration)
+      tokens = lexer.tokenize
+      expect(tokens).to_not eq []
+      (0...tokens.length).each { |i|
+        expect(tokens[i]).to be_kind_of XinetdConfig::Token::CommentToken
+      }
+    end
+    
+    assert_tokenization_from(<<CONTENT
 
     # I am a comment
-CONFIGURATION_CONTENT
-    )
-    tokens = lexer.tokenize
-    expect(tokens).to_not eq []
-    expect(tokens[0]).to be_kind_of XinetdConfig::Token::CommentToken
+CONTENT
+).to [XinetdConfig::Token::CommentToken]
 
     lexer = XinetdConfig::Lexer.new(<<CONFIGURATION_CONTENT
 
