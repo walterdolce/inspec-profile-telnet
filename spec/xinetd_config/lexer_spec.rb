@@ -36,14 +36,29 @@ CONTENT
 
     # I am a comment
 CONTENT
-    ).produces [XinetdConfig::Token::CommentToken]
+    ).produces [XinetdConfig::Token::CommentBeginToken]
 
     assert_tokenization_of(<<CONTENT
 
     # I am a comment
 service
 CONTENT
-    ).produces [XinetdConfig::Token::CommentToken, XinetdConfig::Token::ServiceToken]
+    ).produces [XinetdConfig::Token::CommentBeginToken, XinetdConfig::Token::ServiceToken]
+
+    assert_tokenization_of(<<CONTENT
+
+    # I am a comment
+service telnet
+{
+}
+CONTENT
+    ).produces [
+                 XinetdConfig::Token::CommentBeginToken,
+                 XinetdConfig::Token::ServiceToken,
+                 XinetdConfig::Token::ServiceNameToken,
+                 XinetdConfig::Token::EntryBeginToken,
+                 XinetdConfig::Token::EntryEndToken,
+               ]
 
   end
 end

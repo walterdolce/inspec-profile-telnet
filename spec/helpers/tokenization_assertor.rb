@@ -10,7 +10,7 @@ module Helpers
 
     def produces(expected_tokens)
       if @tokens.length != expected_tokens.length
-        raise 'The number of tokens produced does not match the number of expected tokens'
+        raise "The number of tokens produced does not match the number of expected tokens.\nExpected: %s\nGot: %s" % [@tokens.inspect, expected_tokens.inspect]
       end
       (0...@tokens.length).each { |i|
         expect(@tokens[i]).to be_kind_of expected_tokens[i]

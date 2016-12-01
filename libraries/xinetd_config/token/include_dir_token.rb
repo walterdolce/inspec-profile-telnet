@@ -3,8 +3,8 @@ require_relative '../token'
 
 module XinetdConfig
   module Token
-    class ServiceToken < XinetdConfig::Token::Base
-      TOKEN = 'service'
+    class IncludeDirToken < XinetdConfig::Token::Base
+      TOKEN = 'includedir'
     end
   end
 end
