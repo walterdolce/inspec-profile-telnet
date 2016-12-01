@@ -60,6 +60,22 @@ CONTENT
                  XinetdConfig::Token::EntryEndToken,
                ]
 
+    assert_tokenization_of(<<CONTENT
+defaults
+    # I am a comment
+service telnet
+{
+}
+CONTENT
+    ).produces [
+                 XinetdConfig::Token::DefaultsToken,
+                 XinetdConfig::Token::CommentBeginToken,
+                 XinetdConfig::Token::ServiceToken,
+                 XinetdConfig::Token::ServiceNameToken,
+                 XinetdConfig::Token::EntryBeginToken,
+                 XinetdConfig::Token::EntryEndToken,
+               ]
+
   end
 end
 

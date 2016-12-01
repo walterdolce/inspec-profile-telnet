@@ -5,6 +5,7 @@ require_relative '../xinetd_config/token/service_token'
 require_relative '../xinetd_config/token/service_name_token'
 require_relative '../xinetd_config/token/entry_begin_token'
 require_relative '../xinetd_config/token/entry_end_token'
+require_relative '../xinetd_config/token/defaults_token'
 
 module XinetdConfig
   class Lexer
@@ -27,6 +28,8 @@ module XinetdConfig
             @tokens << Token::ServiceNameToken.new(line)
           elsif line.match(/^#{Token::ServiceToken::TOKEN}/)
             @tokens << Token::ServiceToken.new(line)
+          elsif line.match(/^#{Token::DefaultsToken::TOKEN}/)
+            @tokens << Token::DefaultsToken.new(line)
           elsif line.match(/^#{Token::EntryBeginToken::TOKEN}/)
             @tokens << Token::EntryBeginToken.new(line)
           elsif line.match(/^#{Token::EntryEndToken::TOKEN}/)
