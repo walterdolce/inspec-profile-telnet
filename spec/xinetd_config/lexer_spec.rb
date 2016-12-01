@@ -1,5 +1,11 @@
 require 'rspec'
 require_relative '../../libraries/xinetd_config/lexer'
+require_relative '../helpers/tokenization_assertor'
+
+RSpec.configure do |c|
+  c.include Helpers
+end
+
 
 describe XinetdConfig::Lexer do
   it 'returns an empty list of tokens by default' do
@@ -18,41 +24,27 @@ describe XinetdConfig::Lexer do
   end
 
   it 'returns an empty list of tokens when the tokenized configuration files content result empty' do
-    lexer = XinetdConfig::Lexer.new(<<CONFIGURATION_CONTENT
+    assert_tokenization_of(<<CONTENT
 
 
-CONFIGURATION_CONTENT
-    )
-    expect(lexer.tokenize).to eq []
+CONTENT
+    ).produces []
   end
 
   it 'returns lists containing instances of token objects representing the tokenized configuration components' do
-
-    def assert_tokenization_from(configuration, &block)
-      lexer = XinetdConfig::Lexer.new(configuration)
-      tokens = lexer.tokenize
-      expect(tokens).to_not eq []
-      (0...tokens.length).each { |i|
-        expect(tokens[i]).to be_kind_of XinetdConfig::Token::CommentToken
-      }
-    end
-    
-    assert_tokenization_from(<<CONTENT
+    assert_tokenization_of(<<CONTENT
 
     # I am a comment
 CONTENT
-).to [XinetdConfig::Token::CommentToken]
+    ).produces [XinetdConfig::Token::CommentToken]
 
-    lexer = XinetdConfig::Lexer.new(<<CONFIGURATION_CONTENT
+    assert_tokenization_of(<<CONTENT
 
     # I am a comment
 service
-CONFIGURATION_CONTENT
-    )
-    tokens = lexer.tokenize
-    expect(tokens).to_not eq []
-    expect(tokens[0]).to be_kind_of XinetdConfig::Token::CommentToken
-    expect(tokens[1]).to be_kind_of XinetdConfig::Token::ServiceToken
+CONTENT
+    ).produces [XinetdConfig::Token::CommentToken, XinetdConfig::Token::ServiceToken]
+
   end
 end
 
