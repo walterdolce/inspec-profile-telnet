@@ -24,58 +24,42 @@ describe XinetdConfig::Lexer do
   end
 
   it 'returns an empty list of tokens when the tokenized configuration files content result empty' do
-    assert_tokenization_of(<<CONTENT
-
-
-CONTENT
-    ).produces []
+    assert_tokenization_of('').produces []
   end
 
-  it 'returns lists containing instances of token objects representing the tokenized configuration components' do
+  it 'tokenizes comments found in the configuration files' do
     assert_tokenization_of(<<CONTENT
-
     # I am a comment
 CONTENT
     ).produces [XinetdConfig::Token::CommentBeginToken]
+  end
 
+  it 'tokenizes partial service blocks found in the configuration files' do
     assert_tokenization_of(<<CONTENT
-
-    # I am a comment
 service
 CONTENT
-    ).produces [XinetdConfig::Token::CommentBeginToken, XinetdConfig::Token::ServiceToken]
+    ).produces [XinetdConfig::Token::ServiceToken]
+  end
 
+  it 'tokenizes empty service blocks found in the configuration files' do
     assert_tokenization_of(<<CONTENT
-
-    # I am a comment
 service telnet
 {
 }
 CONTENT
     ).produces [
-                 XinetdConfig::Token::CommentBeginToken,
                  XinetdConfig::Token::ServiceToken,
                  XinetdConfig::Token::ServiceNameToken,
                  XinetdConfig::Token::EntryBeginToken,
                  XinetdConfig::Token::EntryEndToken,
                ]
+  end
 
+  it 'tokenizes partial defaults block found in the configuration files' do
     assert_tokenization_of(<<CONTENT
 defaults
-    # I am a comment
-service telnet
-{
-}
 CONTENT
-    ).produces [
-                 XinetdConfig::Token::DefaultsToken,
-                 XinetdConfig::Token::CommentBeginToken,
-                 XinetdConfig::Token::ServiceToken,
-                 XinetdConfig::Token::ServiceNameToken,
-                 XinetdConfig::Token::EntryBeginToken,
-                 XinetdConfig::Token::EntryEndToken,
-               ]
-
+    ).produces [XinetdConfig::Token::DefaultsToken]
   end
 end
 
