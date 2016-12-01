@@ -20,7 +20,7 @@ module XinetdConfig
       @raw_configuration.each_line do |line|
         line = line.strip.chomp
         if line != ''
-          if line[0] == Token::CommentBeginToken::TOKEN
+          if line.match(/^#{Token::CommentBeginToken::TOKEN}/)
             @tokens << Token::CommentBeginToken.new(line)
           elsif line.match(/^(#{Token::ServiceToken::TOKEN})(\s+)(\S*)$/)
             @tokens << Token::ServiceToken.new(line)
