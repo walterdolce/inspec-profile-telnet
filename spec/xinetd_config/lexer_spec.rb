@@ -8,88 +8,113 @@ end
 
 
 describe XinetdConfig::Lexer do
-  it 'returns an empty list of tokens by default' do
-    lexer = XinetdConfig::Lexer.new
-    expect(lexer.tokens).to eq []
+  describe 'Reading empty configuration file(s)' do
+    it 'returns an empty list of tokens by default' do
+      lexer = XinetdConfig::Lexer.new
+      expect(lexer.tokens).to eq []
+    end
+    it 'returns an empty string as raw configuration by default' do
+      lexer = XinetdConfig::Lexer.new
+      expect(lexer.raw_configuration).to eq ''
+    end
   end
 
-  it 'returns an empty string as raw configuration by default' do
-    lexer = XinetdConfig::Lexer.new
-    expect(lexer.raw_configuration).to eq ''
+  describe 'Getting configuration file(s) content' do
+    it 'returns the raw configuration as-is' do
+      lexer = XinetdConfig::Lexer.new('some configuration')
+      expect(lexer.raw_configuration).to eq 'some configuration'
+    end
   end
 
-  it 'returns the raw configuration as is when set' do
-    lexer = XinetdConfig::Lexer.new('some configuration')
-    expect(lexer.raw_configuration).to eq 'some configuration'
-  end
+  describe 'Tokenizing configuration file(s)' do
+    it 'returns an empty list of tokens when the configuration file(s) is/are empty' do
+      assert_tokenization_of('').produces []
+    end
 
-  it 'returns an empty list of tokens when the tokenized configuration files content result empty' do
-    assert_tokenization_of('').produces []
-  end
-
-  it 'tokenizes comments found in the configuration files' do
-    assert_tokenization_of(<<CONTENT
-    # I am a comment
+    describe 'Tokenizing comments' do
+      it 'tokenizes comments' do
+        assert_tokenization_of(<<CONTENT
+        # I am a comment
 CONTENT
-    ).produces [XinetdConfig::Token::CommentBeginToken]
-  end
+        ).produces [XinetdConfig::Token::CommentBeginToken]
+      end
+    end
 
-  it 'tokenizes partial service blocks found in the configuration files' do
-    assert_tokenization_of(<<CONTENT
-service
+    describe 'Tokenizing service blocks' do
+      it 'tokenizes partially defined service blocks' do
+        assert_tokenization_of(<<CONTENT
+    service
 CONTENT
-    ).produces [XinetdConfig::Token::ServiceToken]
-  end
+        ).produces [XinetdConfig::Token::ServiceToken]
+      end
 
-  it 'tokenizes empty service blocks found in the configuration files' do
-    assert_tokenization_of(<<CONTENT
-service telnet
+      it 'tokenizes empty service blocks' do
+        assert_tokenization_of(<<CONTENT
+    service telnet
+    {
+    }
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+    end
+
+    describe 'Tokenizing defaults blocks' do
+      it 'tokenizes partially defined defaults blocks' do
+        assert_tokenization_of(<<CONTENT
+defaults
+CONTENT
+        ).produces [XinetdConfig::Token::DefaultsToken]
+      end
+
+      it 'tokenizes empty defaults block(s)' do
+        assert_tokenization_of(<<CONTENT
+defaults
 {
 }
 CONTENT
-    ).produces [
-                 XinetdConfig::Token::ServiceToken,
-                 XinetdConfig::Token::ServiceNameToken,
-                 XinetdConfig::Token::EntryBeginToken,
-                 XinetdConfig::Token::EntryEndToken,
-               ]
-  end
+        ).produces [
+                     XinetdConfig::Token::DefaultsToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+    end
 
-  it 'tokenizes partial defaults block found in the configuration files' do
-    assert_tokenization_of(<<CONTENT
-defaults
-CONTENT
-    ).produces [XinetdConfig::Token::DefaultsToken]
-  end
-
-  it 'tokenizes empty include statements found in the configuration files' do
-    assert_tokenization_of(<<CONTENT
+    describe 'Tokenizing include statements' do
+      it 'tokenizes empty include statements' do
+        assert_tokenization_of(<<CONTENT
 include
 CONTENT
-    ).produces [XinetdConfig::Token::IncludeToken]
-  end
-
-  it 'tokenizes empty includedir statements found in the configuration files' do
-    assert_tokenization_of(<<CONTENT
-includedir
-CONTENT
-    ).produces [XinetdConfig::Token::IncludeDirToken]
-  end
-
-  it 'tokenizes include statements found in the configuration files' do
-    assert_tokenization_of(<<CONTENT
+        ).produces [XinetdConfig::Token::IncludeToken]
+      end
+      it 'tokenizes include statements' do
+        assert_tokenization_of(<<CONTENT
 include /etc/xinetd/telnet
 CONTENT
-    ).produces [XinetdConfig::Token::IncludeToken, XinetdConfig::Token::IncludePathToken]
-  end
+        ).produces [XinetdConfig::Token::IncludeToken, XinetdConfig::Token::IncludePathToken]
+      end
+      #TODO add "it tokenizes include statements whose path contain spaces. Ex: include '/etc/some file/path'"
+    end
 
-  it 'tokenizes includedir statements found in the configuration files' do
-    assert_tokenization_of(<<CONTENT
+    describe 'Tokenizing includedir statements' do
+      it 'tokenizes empty includedir statements' do
+        assert_tokenization_of(<<CONTENT
+includedir
+CONTENT
+        ).produces [XinetdConfig::Token::IncludeDirToken]
+      end
+      it 'tokenizes includedir statement(s)' do
+        assert_tokenization_of(<<CONTENT
 includedir /etc/xinet.d
 CONTENT
-    ).produces [XinetdConfig::Token::IncludeDirToken, XinetdConfig::Token::IncludePathToken]
+        ).produces [XinetdConfig::Token::IncludeDirToken, XinetdConfig::Token::IncludePathToken]
+      end
+      #TODO add "it tokenizes includedir statements whose path contain spaces. Ex: include '/etc/some file/path'"
+    end
   end
-
-
 end
-
