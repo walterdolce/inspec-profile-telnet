@@ -1,6 +1,5 @@
 static const struct attribute service_attributes[] =
 {
-   { "protocol",       A_PROTOCOL,       1,  protocol_parser        },
    { "wait",           A_WAIT,           1,  wait_parser            },
    { "user",           A_USER,           1,  user_parser            },
    { "group",          A_GROUP,          1,  group_parser           },

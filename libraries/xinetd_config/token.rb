@@ -16,7 +16,8 @@ module XinetdConfig
     ]
 
     SERVICE_ATTRIBUTE_TOKENS = [
-      Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
+      Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN,
+      Token::ServiceAttributes::ProtocolAttributeToken::TOKEN,
     ]
   end
 end

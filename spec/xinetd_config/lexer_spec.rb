@@ -85,6 +85,21 @@ CONTENT
                      XinetdConfig::Token::EntryEndToken,
                    ]
       end
+      it 'tokenizes the protocol attribute' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  protocol
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::ProtocolAttributeToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
     end
 
     describe 'Tokenizing defaults blocks' do

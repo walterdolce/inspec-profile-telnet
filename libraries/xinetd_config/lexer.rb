@@ -19,7 +19,11 @@ module XinetdConfig
             @tokens.last.class == Token::EntryBeginToken &&
             !(Token::FIRST_LEVEL_TOKENS.include? first_line_word)
               if Token::SERVICE_ATTRIBUTE_TOKENS.include? first_line_word
-                @tokens << Token::ServiceAttributes::SocketTypeAttributeToken.new(line)
+                if first_line_word == Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::SocketTypeAttributeToken.new(line)
+                elsif
+                  @tokens << Token::ServiceAttributes::ProtocolAttributeToken.new(line)
+                end
               else
                 @tokens << Token::ServiceAttributes::UnrecognisedAttributeToken.new(line)
               end
