@@ -1,8 +1,5 @@
 source 'https://rubygems.org'
 
 gem 'cucumber', '2.4.0'
-# Remove once https://github.com/chef/inspec/pull/1327 has been merged and released
-gem 'inspec', '1.5.0',
-  :git => 'https://github.com/chef/inspec.git',
-  :branch => 'chris-rock/remove-test-dir-profile'
+gem 'inspec', '1.7.0'
 gem 'rspec-expectations', '3.5.0'
