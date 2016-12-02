@@ -6,6 +6,8 @@ require_relative '../xinetd_config/token/service_name_token'
 require_relative '../xinetd_config/token/entry_begin_token'
 require_relative '../xinetd_config/token/entry_end_token'
 require_relative '../xinetd_config/token/defaults_token'
+require_relative '../xinetd_config/token/include_dir_token'
+require_relative '../xinetd_config/token/include_token'
 
 module XinetdConfig
   class Lexer
@@ -38,6 +40,12 @@ module XinetdConfig
             } if tokens_match
           elsif line[0] == 'd' && line.match(/^#{Token::DefaultsToken::TOKEN}/)
             @tokens << Token::DefaultsToken.new(line)
+          elsif line[0] == 'i'
+            if line.match(/^#{Token::IncludeDirToken::TOKEN}/)
+              @tokens << Token::IncludeDirToken.new(line)
+            elsif line.match(/^#{Token::IncludeToken::TOKEN}/)
+              @tokens << Token::IncludeToken.new(line)
+            end
           end
         end
       end

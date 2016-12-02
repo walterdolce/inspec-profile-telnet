@@ -63,11 +63,17 @@ CONTENT
   end
 
   it 'tokenizes empty include statements found in the configuration files' do
-    pending 'TODO'
+    assert_tokenization_of(<<CONTENT
+include
+CONTENT
+    ).produces [XinetdConfig::Token::IncludeToken]
   end
 
   it 'tokenizes empty includedir statements found in the configuration files' do
-    pending 'TODO'
+    assert_tokenization_of(<<CONTENT
+includedir
+CONTENT
+    ).produces [XinetdConfig::Token::IncludeDirToken]
   end
 
 
