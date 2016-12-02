@@ -21,21 +21,23 @@ module XinetdConfig
       @raw_configuration.each_line do |line|
         line = line.strip.chomp
         if line != ''
-          if line.match(/^#{Token::CommentBeginToken::TOKEN}/)
+          if line[0] == Token::CommentBeginToken::TOKEN
             @tokens << Token::CommentBeginToken.new(line)
-          elsif line.match(/^(#{Token::ServiceToken::TOKEN})(\s+)(\S*)$/)
-            @tokens << Token::ServiceToken.new(line)
-            @tokens << Token::ServiceNameToken.new(line)
-          elsif line.match(/^#{Token::ServiceToken::TOKEN}/)
-            @tokens << Token::ServiceToken.new(line)
-          elsif line.match(/^#{Token::DefaultsToken::TOKEN}/)
-            @tokens << Token::DefaultsToken.new(line)
-          elsif line.match(/^#{Token::EntryBeginToken::TOKEN}/)
+          elsif line[0] == Token::EntryBeginToken::TOKEN
             @tokens << Token::EntryBeginToken.new(line)
-          elsif line.match(/^#{Token::EntryEndToken::TOKEN}/)
+          elsif line[0] == Token::EntryEndToken::TOKEN
             @tokens << Token::EntryEndToken.new(line)
-          else
-            @tokens << Token::Base.new(line)
+          elsif line[0] == 's'
+            tokens_match = line.split(' ')
+            (0...tokens_match.length).each { |i|
+              if tokens_match[i] == Token::ServiceToken::TOKEN
+                @tokens << Token::ServiceToken.new(line)
+              elsif tokens_match[i].match(/\S*/)
+                @tokens << Token::ServiceNameToken.new(line)
+              end
+            } if tokens_match
+          elsif line[0] == 'd' && line.match(/^#{Token::DefaultsToken::TOKEN}/)
+            @tokens << Token::DefaultsToken.new(line)
           end
         end
       end

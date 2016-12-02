@@ -61,5 +61,15 @@ defaults
 CONTENT
     ).produces [XinetdConfig::Token::DefaultsToken]
   end
+
+  it 'tokenizes empty include statements found in the configuration files' do
+    pending 'TODO'
+  end
+
+  it 'tokenizes empty includedir statements found in the configuration files' do
+    pending 'TODO'
+  end
+
+
 end
 
