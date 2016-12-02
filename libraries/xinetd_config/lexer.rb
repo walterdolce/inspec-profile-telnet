@@ -21,8 +21,90 @@ module XinetdConfig
               if Token::SERVICE_ATTRIBUTE_TOKENS.include? first_line_word
                 if first_line_word == Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
                   @tokens << Token::ServiceAttributes::SocketTypeAttributeToken.new(line)
-                elsif
+                elsif first_line_word == Token::ServiceAttributes::ProtocolAttributeToken::TOKEN
                   @tokens << Token::ServiceAttributes::ProtocolAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::WaitAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::WaitAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::UserAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::UserAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::GroupAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::GroupAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::ServerAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::ServerAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::ServerArgsAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::ServerArgsAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::InstancesAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::InstancesAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::LogOnSuccessAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::LogOnSuccessAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::LogOnFailureAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::LogOnFailureAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::OnlyFromAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::OnlyFromAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::NoAccessAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::NoAccessAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::AccessTimesAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::AccessTimesAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::TypeAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::TypeAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::RpcVersionAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::RpcVersionAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::RpcNumberAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::RpcNumberAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::IdAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::IdAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::EnvAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::EnvAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::PortAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::PortAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::PassenvAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::PassenvAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::FlagsAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::FlagsAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::NiceAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::NiceAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::RedirectAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::RedirectAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::BannerAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::BannerAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::BindAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::BindAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::InterfaceAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::InterfaceAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::PerSourceAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::PerSourceAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::GroupsAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::GroupsAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::BannerSuccessAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::BannerSuccessAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::BannerFailAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::BannerFailAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::CpsAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::CpsAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::DisableAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::DisableAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::MaxLoadAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::MaxLoadAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::RLimitAsAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::RLimitAsAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::RLimitCpuAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::RLimitCpuAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::RLimitDataAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::RLimitDataAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::RLimitRssAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::RLimitRssAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::RLimitStackAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::RLimitStackAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::V6OnlyAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::V6OnlyAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::DenyTimeAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::DenyTimeAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::UmaskAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::UmaskAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::MdnsAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::MdnsAttributeToken.new(line)
+                elsif first_line_word == Token::ServiceAttributes::LibwrapAttributeToken::TOKEN
+                  @tokens << Token::ServiceAttributes::LibwrapAttributeToken.new(line)
                 end
               else
                 @tokens << Token::ServiceAttributes::UnrecognisedAttributeToken.new(line)
