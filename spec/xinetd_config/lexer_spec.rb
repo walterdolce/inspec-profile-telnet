@@ -61,6 +61,22 @@ CONTENT
                      XinetdConfig::Token::EntryEndToken,
                    ]
       end
+
+      it 'tokenizes unrecognised service block attributes' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  unsupported_attribute
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::UnrecognisedAttributeToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
     end
 
     describe 'Tokenizing defaults blocks' do

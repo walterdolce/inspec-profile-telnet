@@ -9,6 +9,7 @@ require_relative '../xinetd_config/token/defaults_token'
 require_relative '../xinetd_config/token/include_dir_token'
 require_relative '../xinetd_config/token/include_token'
 require_relative '../xinetd_config/token/include_path_token'
+require_relative '../xinetd_config/token/service_attributes/unrecognised_attribute_token'
 
 module XinetdConfig
   class Lexer
@@ -25,7 +26,22 @@ module XinetdConfig
         line = line.strip.chomp
         if line != ''
           first_line_char = line.chars.shift
-          if first_line_char == Token::CommentBeginToken::TOKEN
+          first_line_word = line.split(' ').first
+
+          if @tokens.length &&
+            @tokens.last.class == Token::EntryBeginToken &&
+            !(
+            [
+              Token::EntryBeginToken::TOKEN,
+              Token::EntryEndToken::TOKEN,
+              Token::ServiceToken::TOKEN,
+              Token::DefaultsToken::TOKEN,
+              Token::IncludeDirToken::TOKEN,
+              Token::IncludeToken::TOKEN,
+            ].include? first_line_word
+            )
+            @tokens << Token::ServiceAttributes::UnrecognisedAttributeToken.new(line)
+          elsif first_line_char == Token::CommentBeginToken::TOKEN
             @tokens << Token::CommentBeginToken.new(line)
           elsif first_line_char == Token::EntryBeginToken::TOKEN
             @tokens << Token::EntryBeginToken.new(line)
