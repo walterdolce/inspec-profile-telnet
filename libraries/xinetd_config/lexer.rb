@@ -24,13 +24,14 @@ module XinetdConfig
       @raw_configuration.each_line do |line|
         line = line.strip.chomp
         if line != ''
-          if line[0] == Token::CommentBeginToken::TOKEN
+          first_line_char = line.chars.shift
+          if first_line_char == Token::CommentBeginToken::TOKEN
             @tokens << Token::CommentBeginToken.new(line)
-          elsif line[0] == Token::EntryBeginToken::TOKEN
+          elsif first_line_char == Token::EntryBeginToken::TOKEN
             @tokens << Token::EntryBeginToken.new(line)
-          elsif line[0] == Token::EntryEndToken::TOKEN
+          elsif first_line_char == Token::EntryEndToken::TOKEN
             @tokens << Token::EntryEndToken.new(line)
-          elsif line[0] == 's'
+          elsif first_line_char == 's'
             tokens = line.split(' ')
             (0...tokens.length).each { |i|
               if tokens[i] == Token::ServiceToken::TOKEN
@@ -39,9 +40,9 @@ module XinetdConfig
                 @tokens << Token::ServiceNameToken.new(line)
               end
             } if tokens
-          elsif line[0] == 'd' && line.match(/^#{Token::DefaultsToken::TOKEN}/)
+          elsif first_line_char == 'd' && line.match(/^#{Token::DefaultsToken::TOKEN}/)
             @tokens << Token::DefaultsToken.new(line)
-          elsif line[0] == 'i'
+          elsif first_line_char == 'i'
             if line.match(/^#{Token::IncludeDirToken::TOKEN}/)
               @tokens << Token::IncludeDirToken.new(line)
               if line.match(/^(#{Token::IncludeDirToken::TOKEN}[\s+])(\/\S*)/)
