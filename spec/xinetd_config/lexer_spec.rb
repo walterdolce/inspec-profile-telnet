@@ -1,12 +1,3 @@
-require 'rspec'
-require_relative '../../libraries/xinetd_config/lexer'
-require_relative '../helpers/tokenization_assertor'
-
-RSpec.configure do |c|
-  c.include Helpers
-end
-
-
 describe XinetdConfig::Lexer do
   describe 'Reading empty configuration file(s)' do
     it 'returns an empty list of tokens by default' do
@@ -61,7 +52,9 @@ CONTENT
                      XinetdConfig::Token::EntryEndToken,
                    ]
       end
+    end
 
+    describe 'Tokenizing service block attributes' do
       it 'tokenizes unrecognised service block attributes' do
         assert_tokenization_of(<<CONTENT
 service telnet
@@ -74,6 +67,21 @@ CONTENT
                      XinetdConfig::Token::ServiceNameToken,
                      XinetdConfig::Token::EntryBeginToken,
                      XinetdConfig::Token::ServiceAttributes::UnrecognisedAttributeToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the socket_type attribute' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  socket_type
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::SocketTypeAttributeToken,
                      XinetdConfig::Token::EntryEndToken,
                    ]
       end

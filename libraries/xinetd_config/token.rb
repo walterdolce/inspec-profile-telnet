@@ -1,15 +1,22 @@
+Dir.glob(
+  File.join(File.dirname(__FILE__), 'token', '**', '*.rb')
+).each do |file|
+  require file
+end
 
 module XinetdConfig
   module Token
-    class Base
-      attr_reader :raw_token
+    FIRST_LEVEL_TOKENS = [
+      Token::EntryBeginToken::TOKEN,
+      Token::EntryEndToken::TOKEN,
+      Token::ServiceToken::TOKEN,
+      Token::DefaultsToken::TOKEN,
+      Token::IncludeDirToken::TOKEN,
+      Token::IncludeToken::TOKEN,
+    ]
 
-      def initialize(raw_token)
-        @raw_token = raw_token
-      end
-
-      private
-        attr_writer :raw_token
-    end
+    SERVICE_ATTRIBUTE_TOKENS = [
+      Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
+    ]
   end
 end

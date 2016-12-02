@@ -1,6 +1,3 @@
-
-require_relative '../token'
-
 module XinetdConfig
   module Token
     class CommentBeginToken < XinetdConfig::Token::Base

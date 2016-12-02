@@ -1,4 +1,3 @@
-
 module XinetdConfig
   module Token
     module ServiceAttributes

@@ -1,16 +1,3 @@
-require 'rspec'
-require_relative './token'
-require_relative '../xinetd_config/token/comment_begin_token'
-require_relative '../xinetd_config/token/service_token'
-require_relative '../xinetd_config/token/service_name_token'
-require_relative '../xinetd_config/token/entry_begin_token'
-require_relative '../xinetd_config/token/entry_end_token'
-require_relative '../xinetd_config/token/defaults_token'
-require_relative '../xinetd_config/token/include_dir_token'
-require_relative '../xinetd_config/token/include_token'
-require_relative '../xinetd_config/token/include_path_token'
-require_relative '../xinetd_config/token/service_attributes/unrecognised_attribute_token'
-
 module XinetdConfig
   class Lexer
 
@@ -30,17 +17,12 @@ module XinetdConfig
 
           if @tokens.length &&
             @tokens.last.class == Token::EntryBeginToken &&
-            !(
-            [
-              Token::EntryBeginToken::TOKEN,
-              Token::EntryEndToken::TOKEN,
-              Token::ServiceToken::TOKEN,
-              Token::DefaultsToken::TOKEN,
-              Token::IncludeDirToken::TOKEN,
-              Token::IncludeToken::TOKEN,
-            ].include? first_line_word
-            )
-            @tokens << Token::ServiceAttributes::UnrecognisedAttributeToken.new(line)
+            !(Token::FIRST_LEVEL_TOKENS.include? first_line_word)
+              if Token::SERVICE_ATTRIBUTE_TOKENS.include? first_line_word
+                @tokens << Token::ServiceAttributes::SocketTypeAttributeToken.new(line)
+              else
+                @tokens << Token::ServiceAttributes::UnrecognisedAttributeToken.new(line)
+              end
           elsif first_line_char == Token::CommentBeginToken::TOKEN
             @tokens << Token::CommentBeginToken.new(line)
           elsif first_line_char == Token::EntryBeginToken::TOKEN

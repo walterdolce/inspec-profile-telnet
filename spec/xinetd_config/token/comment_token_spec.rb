@@ -1,6 +1,3 @@
-require 'rspec'
-require_relative '../../../libraries/xinetd_config/token/comment_begin_token'
-
 describe XinetdConfig::Token::CommentBeginToken do
   it 'is of type XinetdConfig::Token::Base' do
     token = XinetdConfig::Token::CommentBeginToken.new('# I am a comment')
