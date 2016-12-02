@@ -355,6 +355,7 @@ CONTENT
                      XinetdConfig::Token::EntryEndToken,
                    ]
       end
+
       it 'tokenizes the passenv attribute' do
         assert_tokenization_of(<<CONTENT
 service telnet
