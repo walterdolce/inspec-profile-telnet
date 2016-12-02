@@ -31,14 +31,14 @@ module XinetdConfig
           elsif line[0] == Token::EntryEndToken::TOKEN
             @tokens << Token::EntryEndToken.new(line)
           elsif line[0] == 's'
-            tokens_match = line.split(' ')
-            (0...tokens_match.length).each { |i|
-              if tokens_match[i] == Token::ServiceToken::TOKEN
+            tokens = line.split(' ')
+            (0...tokens.length).each { |i|
+              if tokens[i] == Token::ServiceToken::TOKEN
                 @tokens << Token::ServiceToken.new(line)
-              elsif tokens_match[i].match(/\S*/)
+              elsif tokens[i].match(/\S*/)
                 @tokens << Token::ServiceNameToken.new(line)
               end
-            } if tokens_match
+            } if tokens
           elsif line[0] == 'd' && line.match(/^#{Token::DefaultsToken::TOKEN}/)
             @tokens << Token::DefaultsToken.new(line)
           elsif line[0] == 'i'
@@ -53,7 +53,6 @@ module XinetdConfig
                 @tokens << Token::IncludePathToken.new(line)
               end
             end
-
           end
         end
       end
