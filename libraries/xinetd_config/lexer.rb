@@ -8,6 +8,7 @@ require_relative '../xinetd_config/token/entry_end_token'
 require_relative '../xinetd_config/token/defaults_token'
 require_relative '../xinetd_config/token/include_dir_token'
 require_relative '../xinetd_config/token/include_token'
+require_relative '../xinetd_config/token/include_path_token'
 
 module XinetdConfig
   class Lexer
@@ -43,9 +44,16 @@ module XinetdConfig
           elsif line[0] == 'i'
             if line.match(/^#{Token::IncludeDirToken::TOKEN}/)
               @tokens << Token::IncludeDirToken.new(line)
+              if line.match(/^(#{Token::IncludeDirToken::TOKEN}[\s+])(\/\S*)/)
+                @tokens << Token::IncludePathToken.new(line)
+              end
             elsif line.match(/^#{Token::IncludeToken::TOKEN}/)
               @tokens << Token::IncludeToken.new(line)
+              if line.match(/^(#{Token::IncludeToken::TOKEN}[\s+])(\/\S*)/)
+                @tokens << Token::IncludePathToken.new(line)
+              end
             end
+
           end
         end
       end

@@ -76,6 +76,20 @@ CONTENT
     ).produces [XinetdConfig::Token::IncludeDirToken]
   end
 
+  it 'tokenizes include statements found in the configuration files' do
+    assert_tokenization_of(<<CONTENT
+include /etc/xinetd/telnet
+CONTENT
+    ).produces [XinetdConfig::Token::IncludeToken, XinetdConfig::Token::IncludePathToken]
+  end
+
+  it 'tokenizes includedir statements found in the configuration files' do
+    assert_tokenization_of(<<CONTENT
+includedir /etc/xinet.d
+CONTENT
+    ).produces [XinetdConfig::Token::IncludeDirToken, XinetdConfig::Token::IncludePathToken]
+  end
+
 
 end
 
