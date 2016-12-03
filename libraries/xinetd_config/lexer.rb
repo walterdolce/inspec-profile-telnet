@@ -17,7 +17,6 @@ module XinetdConfig
           first_line_word = split_line.first
           last_available_token = @tokens.last.class
 
-          puts line, last_available_token, first_line_word
           if last_available_token == Token::EntryBeginToken && !(Token::FIRST_LEVEL_TOKENS.include? first_line_word)
               if Token::SERVICE_ATTRIBUTE_TOKENS.include? first_line_word
                 if first_line_word == Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
