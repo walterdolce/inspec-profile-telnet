@@ -718,6 +718,59 @@ CONTENT
       end
     end
 
+    describe 'Tokenizing service block attribute operators' do
+      it 'tokenizes the assignment operator (=)' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  id =
+}
+CONTENT
+        ).produces [
+          XinetdConfig::Token::ServiceToken,
+          XinetdConfig::Token::ServiceNameToken,
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::EntryEndToken,
+        ]
+      end
+
+      it 'tokenizes the add assignment operator (+=)' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  id +=
+}
+CONTENT
+        ).produces [
+          XinetdConfig::Token::ServiceToken,
+          XinetdConfig::Token::ServiceNameToken,
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
+          XinetdConfig::Token::Operators::AddAssignmentToken,
+          XinetdConfig::Token::EntryEndToken,
+        ]
+      end
+
+      it 'tokenizes the subtract assignment operator (-=)' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  id -=
+}
+CONTENT
+        ).produces [
+          XinetdConfig::Token::ServiceToken,
+          XinetdConfig::Token::ServiceNameToken,
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
+          XinetdConfig::Token::Operators::SubtractAssignmentToken,
+          XinetdConfig::Token::EntryEndToken,
+        ]
+      end
+    end
+
     describe 'Tokenizing defaults blocks' do
       it 'tokenizes partially defined defaults blocks' do
         assert_tokenization_of(<<CONTENT

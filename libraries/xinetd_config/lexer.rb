@@ -13,11 +13,12 @@ module XinetdConfig
         line = line.strip.chomp
         if line != ''
           first_line_char = line.chars.shift
-          first_line_word = line.split(' ').first
+          split_line = line.split(' ')
+          first_line_word = split_line.first
+          last_available_token = @tokens.last.class
 
-          if @tokens.length &&
-            @tokens.last.class == Token::EntryBeginToken &&
-            !(Token::FIRST_LEVEL_TOKENS.include? first_line_word)
+          puts line, last_available_token, first_line_word
+          if last_available_token == Token::EntryBeginToken && !(Token::FIRST_LEVEL_TOKENS.include? first_line_word)
               if Token::SERVICE_ATTRIBUTE_TOKENS.include? first_line_word
                 if first_line_word == Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
                   @tokens << Token::ServiceAttributes::SocketTypeAttributeToken.new(line)
@@ -109,6 +110,18 @@ module XinetdConfig
               else
                 @tokens << Token::ServiceAttributes::UnrecognisedAttributeToken.new(line)
               end
+
+              assignment_operator = split_line[1]
+              if assignment_operator
+                if assignment_operator == Token::Operators::AssignmentToken::TOKEN
+                  @tokens << Token::Operators::AssignmentToken.new(line)
+                elsif assignment_operator == Token::Operators::AddAssignmentToken::TOKEN
+                  @tokens << Token::Operators::AddAssignmentToken.new(line)
+                elsif assignment_operator == Token::Operators::SubtractAssignmentToken::TOKEN
+                  @tokens << Token::Operators::SubtractAssignmentToken.new(line)
+                end
+              end
+
           elsif first_line_char == Token::CommentBeginToken::TOKEN
             @tokens << Token::CommentBeginToken.new(line)
           elsif first_line_char == Token::EntryBeginToken::TOKEN

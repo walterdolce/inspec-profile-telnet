@@ -1,7 +1,7 @@
 module XinetdConfig
   module Token
     module ServiceAttributes
-      class IdAttributeToken < XinetdConfig::Token::Base
+      class IdAttributeToken < XinetdConfig::Token::ServiceAttributes::Base
         TOKEN = 'id'
       end
     end

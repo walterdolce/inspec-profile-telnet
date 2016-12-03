@@ -11,5 +11,9 @@ module XinetdConfig
       attr_writer :raw_token
     end
 
+    module ServiceAttributes
+      class Base < XinetdConfig::Token::Base
+      end
+    end
   end
 end

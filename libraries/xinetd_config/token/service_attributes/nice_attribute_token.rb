@@ -1,7 +1,7 @@
 module XinetdConfig
   module Token
     module ServiceAttributes
-      class NiceAttributeToken < XinetdConfig::Token::Base
+      class NiceAttributeToken < XinetdConfig::Token::ServiceAttributes::Base
         TOKEN = 'nice'
       end
     end

@@ -1,7 +1,7 @@
 module XinetdConfig
   module Token
     module ServiceAttributes
-      class FlagsAttributeToken < XinetdConfig::Token::Base
+      class FlagsAttributeToken < XinetdConfig::Token::ServiceAttributes::Base
         TOKEN = 'flags'
       end
     end

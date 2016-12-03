@@ -1,7 +1,7 @@
 module XinetdConfig
   module Token
     module ServiceAttributes
-      class ServerAttributeToken < XinetdConfig::Token::Base
+      class ServerAttributeToken < XinetdConfig::Token::ServiceAttributes::Base
         TOKEN = 'server'
       end
     end

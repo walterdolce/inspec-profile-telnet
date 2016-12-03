@@ -1,7 +1,7 @@
 module XinetdConfig
   module Token
     module ServiceAttributes
-      class PortAttributeToken < XinetdConfig::Token::Base
+      class PortAttributeToken < XinetdConfig::Token::ServiceAttributes::Base
         TOKEN = 'port'
       end
     end

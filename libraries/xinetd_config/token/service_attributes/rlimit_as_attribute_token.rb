@@ -1,7 +1,7 @@
 module XinetdConfig
   module Token
     module ServiceAttributes
-      class RLimitAsAttributeToken < XinetdConfig::Token::Base
+      class RLimitAsAttributeToken < XinetdConfig::Token::ServiceAttributes::Base
         TOKEN = 'rlimit_as'
       end
     end

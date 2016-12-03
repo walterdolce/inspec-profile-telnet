@@ -1,7 +1,7 @@
 module XinetdConfig
   module Token
     module ServiceAttributes
-      class DisableAttributeToken < XinetdConfig::Token::Base
+      class DisableAttributeToken < XinetdConfig::Token::ServiceAttributes::Base
         TOKEN = 'disable'
       end
     end

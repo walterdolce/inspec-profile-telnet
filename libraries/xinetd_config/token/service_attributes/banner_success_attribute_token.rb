@@ -1,7 +1,7 @@
 module XinetdConfig
   module Token
     module ServiceAttributes
-      class BannerSuccessAttributeToken < XinetdConfig::Token::Base
+      class BannerSuccessAttributeToken < XinetdConfig::Token::ServiceAttributes::Base
         TOKEN = 'banner_success'
       end
     end

@@ -1,7 +1,7 @@
 module XinetdConfig
   module Token
     module ServiceAttributes
-      class RpcVersionAttributeToken < XinetdConfig::Token::Base
+      class RpcVersionAttributeToken < XinetdConfig::Token::ServiceAttributes::Base
         TOKEN = 'rpc_version'
       end
     end
