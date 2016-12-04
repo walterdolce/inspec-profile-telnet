@@ -14,6 +14,11 @@ module XinetdConfig
     module ServiceAttributes
       class Base < XinetdConfig::Token::Base
       end
+      
+      module ServiceAttributeValues
+        class Base < XinetdConfig::Token::Base
+        end
+      end
     end
   end
 end
