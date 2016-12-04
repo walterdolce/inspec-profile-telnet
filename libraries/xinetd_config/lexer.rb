@@ -14,7 +14,6 @@ module XinetdConfig
     end
 
     def tokenize
-      
       @raw_configuration.each_line do |line|
         line = line.strip.chomp
         if line != ''
@@ -27,15 +26,8 @@ module XinetdConfig
             @tokens << @token_factory.create(first_line_word)
             assignment_operator = split_line[1]
             if assignment_operator
-              if assignment_operator == Token::Operators::AssignmentToken::TOKEN
-                @tokens << Token::Operators::AssignmentToken.new(line)
-              elsif assignment_operator == Token::Operators::AddAssignmentToken::TOKEN
-                @tokens << Token::Operators::AddAssignmentToken.new(line)
-              elsif assignment_operator == Token::Operators::SubtractAssignmentToken::TOKEN
-                @tokens << Token::Operators::SubtractAssignmentToken.new(line)
-              end
+              @tokens << @token_factory.create(assignment_operator)
             end
-
           elsif first_line_char == Token::CommentBeginToken::TOKEN
             @tokens << Token::CommentBeginToken.new(line)
           elsif first_line_char == Token::EntryBeginToken::TOKEN

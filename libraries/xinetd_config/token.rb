@@ -1,4 +1,3 @@
-
 require_relative '../xinetd_config/token/base_token'
 
 Dir.glob(
@@ -17,7 +16,7 @@ module XinetdConfig
       XinetdConfig::Token::IncludeDirToken::TOKEN,
       XinetdConfig::Token::IncludeToken::TOKEN,
     ]
-
+    
     SERVICE_ATTRIBUTE_TOKENS = [
       Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN,
       Token::ServiceAttributes::ProtocolAttributeToken::TOKEN,
@@ -162,6 +161,12 @@ module XinetdConfig
             MdnsAttributeToken.new(line)
           when LibwrapAttributeToken::TOKEN
             LibwrapAttributeToken.new(line)
+          when Token::Operators::AssignmentToken::TOKEN
+            Token::Operators::AssignmentToken.new(line)
+          when Token::Operators::AddAssignmentToken::TOKEN
+            Token::Operators::AddAssignmentToken.new(line)
+          when Token::Operators::SubtractAssignmentToken::TOKEN
+            Token::Operators::SubtractAssignmentToken.new(line)
           else
             UnrecognisedAttributeToken.new(line)
           end
