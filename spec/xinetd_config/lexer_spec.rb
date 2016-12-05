@@ -1,5 +1,5 @@
 describe XinetdConfig::Lexer do
-  
+
   describe 'Using token factories' do
     it 'returns an instance of XinetdConfig::Token::ServiceAttributes::TokenFactory as factory by default' do
       lexer = XinetdConfig::Lexer.new
@@ -91,6 +91,7 @@ CONTENT
                      XinetdConfig::Token::EntryEndToken,
                    ]
       end
+
       it 'tokenizes the socket_type attribute' do
         assert_tokenization_of(<<CONTENT
 service telnet
@@ -106,6 +107,7 @@ CONTENT
                      XinetdConfig::Token::EntryEndToken,
                    ]
       end
+
       it 'tokenizes the protocol attribute' do
         assert_tokenization_of(<<CONTENT
 service telnet
@@ -121,6 +123,7 @@ CONTENT
                      XinetdConfig::Token::EntryEndToken,
                    ]
       end
+
       it 'tokenizes the wait attribute' do
         assert_tokenization_of(<<CONTENT
 service telnet
@@ -748,13 +751,13 @@ service telnet
 }
 CONTENT
         ).produces [
-          XinetdConfig::Token::ServiceToken,
-          XinetdConfig::Token::ServiceNameToken,
-          XinetdConfig::Token::EntryBeginToken,
-          XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
-          XinetdConfig::Token::Operators::AssignmentToken,
-          XinetdConfig::Token::EntryEndToken,
-        ]
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
       end
 
       it 'tokenizes the add assignment operator (+=)' do
@@ -765,13 +768,13 @@ service telnet
 }
 CONTENT
         ).produces [
-          XinetdConfig::Token::ServiceToken,
-          XinetdConfig::Token::ServiceNameToken,
-          XinetdConfig::Token::EntryBeginToken,
-          XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
-          XinetdConfig::Token::Operators::AddAssignmentToken,
-          XinetdConfig::Token::EntryEndToken,
-        ]
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
+                     XinetdConfig::Token::Operators::AddAssignmentToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
       end
 
       it 'tokenizes the subtract assignment operator (-=)' do
@@ -782,13 +785,13 @@ service telnet
 }
 CONTENT
         ).produces [
-          XinetdConfig::Token::ServiceToken,
-          XinetdConfig::Token::ServiceNameToken,
-          XinetdConfig::Token::EntryBeginToken,
-          XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
-          XinetdConfig::Token::Operators::SubtractAssignmentToken,
-          XinetdConfig::Token::EntryEndToken,
-        ]
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
+                     XinetdConfig::Token::Operators::SubtractAssignmentToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
       end
     end
 
@@ -801,14 +804,14 @@ service telnet
 }
 CONTENT
         ).produces [
-          XinetdConfig::Token::ServiceToken,
-          XinetdConfig::Token::ServiceNameToken,
-          XinetdConfig::Token::EntryBeginToken,
-          XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
-          XinetdConfig::Token::Operators::AssignmentToken,
-          XinetdConfig::Token::ServiceNameToken,
-          XinetdConfig::Token::EntryEndToken,
-        ]
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
       end
 
       it 'tokenizes the values of the service attribute type' do
@@ -819,14 +822,14 @@ service telnet
 }
 CONTENT
         ).produces [
-          XinetdConfig::Token::ServiceToken,
-          XinetdConfig::Token::ServiceNameToken,
-          XinetdConfig::Token::EntryBeginToken,
-          XinetdConfig::Token::ServiceAttributes::TypeAttributeToken,
-          XinetdConfig::Token::Operators::AssignmentToken,
-          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RpcValueToken,
-          XinetdConfig::Token::EntryEndToken,
-        ]
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::TypeAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RpcValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
 
       end
 

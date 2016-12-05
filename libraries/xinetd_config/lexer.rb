@@ -1,34 +1,35 @@
 module XinetdConfig
   class Lexer
-    
+
     attr_reader :tokens, :raw_configuration, :token_factory
-    
-    def initialize(raw_configuration='', token_factory=nil)
+
+    def initialize(raw_configuration='', token_factory=nil, configuration_parser=nil)
       @raw_configuration = raw_configuration
       @tokens = []
       if token_factory && !(token_factory.kind_of? Token::ServiceAttributes::TokenFactory)
         raise TypeError,
-          'Token factory must be an instance of XinetdConfig::Token::ServiceAttributes::TokenFactory'
+              'Token factory must be an instance of XinetdConfig::Token::ServiceAttributes::TokenFactory'
       end
       @token_factory = token_factory || Token::ServiceAttributes::TokenFactory.new
+      @configuration_parser = configuration_parser
     end
-    
+
     def tokenize
       @raw_configuration.each_line do |line|
         line = line.strip.chomp
         unless line.empty?
-          first_line_char = line.chars.shift
           split_line = line.split(' ')
           first_line_word = split_line.shift
           assignment_operator = second_line_word = split_line.shift
           service_attribute_value = split_line.shift
           last_available_token = @tokens.last.class
-  
-          if first_line_char == Token::CommentBeginToken::TOKEN
-            @tokens << Token::CommentBeginToken.new(line)
-            next
+
+
+          if @configuration_parser
+            token = @configuration_parser.tokenize(line)
+            @tokens << token if token
           end
-  
+
           if last_available_token == Token::EntryBeginToken && !(Token::FIRST_LEVEL_TOKENS.include? first_line_word)
             @tokens << @token_factory.create(first_line_word)
             if assignment_operator
@@ -41,10 +42,6 @@ module XinetdConfig
                 @tokens << Token::ServiceNameToken.new(line)
               end
             end
-          elsif first_line_word == Token::EntryBeginToken::TOKEN
-            @tokens << Token::EntryBeginToken.new(line)
-          elsif first_line_word == Token::EntryEndToken::TOKEN
-            @tokens << Token::EntryEndToken.new(line)
           elsif first_line_word == Token::ServiceToken::TOKEN
             @tokens << Token::ServiceToken.new(line)
             if second_line_word
@@ -67,10 +64,10 @@ module XinetdConfig
       end
       @tokens
     end
-    
+
     private
-    
+
     attr_writer :tokens, :raw_configuration, :token_factory
-  
+
   end
 end

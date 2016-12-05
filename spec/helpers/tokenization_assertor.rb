@@ -4,7 +4,13 @@ module Helpers
     include ::RSpec::Matchers
 
     def assert_tokenization_of(configuration)
-      @tokens = XinetdConfig::Lexer.new(configuration).tokenize
+      @tokens = XinetdConfig::Lexer.new(
+        configuration,
+        nil,
+        XinetdConfig::Token::Parser::BlockEntryParser.new(
+          XinetdConfig::Token::Parser::CommentParser.new
+        )
+      ).tokenize
       self
     end
 

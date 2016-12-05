@@ -3,7 +3,9 @@ require 'inspec'
 require 'helpers/tokenization_assertor'
 require_relative '../libraries/xinetd_config'
 
-# require_relative '../../libraries/xinetd_config/lexer'
-RSpec.configure do |c|
-  c.include Helpers
+RSpec.configure do |config|
+  config.include Helpers
+  config.mock_with :rspec do |mocks|
+    mocks.verify_partial_doubles = true
+  end
 end
