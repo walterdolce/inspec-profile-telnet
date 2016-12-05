@@ -8,7 +8,9 @@ module Helpers
         configuration,
         nil,
         XinetdConfig::Token::Parser::BlockEntryParser.new(
-          XinetdConfig::Token::Parser::CommentParser.new
+          XinetdConfig::Token::Parser::CommentParser.new(
+            XinetdConfig::Token::Parser::DefaultsStatementParser.new
+          )
         )
       ).tokenize
       self

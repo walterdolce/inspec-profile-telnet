@@ -47,8 +47,6 @@ module XinetdConfig
             if second_line_word
               @tokens << Token::ServiceNameToken.new(line)
             end
-          elsif first_line_word == Token::DefaultsToken::TOKEN
-            @tokens << Token::DefaultsToken.new(line)
           elsif first_line_word == Token::IncludeDirToken::TOKEN
             @tokens << Token::IncludeDirToken.new(line)
             if second_line_word
