@@ -42,25 +42,15 @@ module XinetdConfig
                 @tokens << Token::ServiceNameToken.new(line)
               end
             end
-          elsif first_line_word == Token::ServiceToken::TOKEN
-            @tokens << Token::ServiceToken.new(line)
-            if second_line_word
-              @tokens << Token::ServiceNameToken.new(line)
-            end
           elsif first_line_word == Token::IncludeDirToken::TOKEN
             @tokens << Token::IncludeDirToken.new(line)
-            if second_line_word
-              @tokens << Token::IncludePathToken.new(line)
-            end
-          elsif first_line_word == Token::IncludeToken::TOKEN
-            @tokens << Token::IncludeToken.new(line)
             if second_line_word
               @tokens << Token::IncludePathToken.new(line)
             end
           end
         end
       end
-      @tokens
+      @tokens.flatten
     end
 
     private
