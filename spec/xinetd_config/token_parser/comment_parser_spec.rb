@@ -1,16 +1,18 @@
 describe XinetdConfig::Token::Parser::CommentParser do
 
+  let (:parser) {
+    XinetdConfig::Token::Parser::CommentParser.new
+  }
+
   it 'is of type XinetdConfig::Token::Parser::BaseParser' do
-    expect(XinetdConfig::Token::Parser::CommentParser.new).to be_kind_of XinetdConfig::Token::Parser::BaseParser
+    expect(parser).to be_kind_of XinetdConfig::Token::Parser::BaseParser
   end
 
   it 'returns null if there is nothing to tokenize by default' do
-    parser = XinetdConfig::Token::Parser::CommentParser.new
     expect(parser.tokenize('foo')).to eq nil
   end
 
   it 'returns an instance of the token' do
-    parser = XinetdConfig::Token::Parser::CommentParser.new
     expect(parser.tokenize('# a comment line')).to include XinetdConfig::Token::CommentToken
   end
 

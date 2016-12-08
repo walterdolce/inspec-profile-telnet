@@ -1,12 +1,13 @@
 describe XinetdConfig::Lexer do
 
   describe 'Reading empty configuration file(s)' do
+    let (:lexer) {
+      XinetdConfig::Lexer.new
+    }
     it 'returns an empty list of tokens by default' do
-      lexer = XinetdConfig::Lexer.new
       expect(lexer.tokens).to eq []
     end
     it 'returns an empty string as raw configuration by default' do
-      lexer = XinetdConfig::Lexer.new
       expect(lexer.raw_configuration).to eq ''
     end
   end

@@ -1,21 +1,22 @@
 describe XinetdConfig::Token::Parser::IncludeStatementParser do
 
+  let (:parser) {
+    XinetdConfig::Token::Parser::IncludeStatementParser.new
+  }
+
   it 'is of type XinetdConfig::Token::Parser::BaseParser' do
-    expect(XinetdConfig::Token::Parser::IncludeStatementParser.new).to be_kind_of XinetdConfig::Token::Parser::BaseParser
+    expect(parser).to be_kind_of XinetdConfig::Token::Parser::BaseParser
   end
 
   it 'returns null when there is nothing to tokenize' do
-    parser = XinetdConfig::Token::Parser::IncludeStatementParser.new
     expect(parser.tokenize('foo')).to eq nil
   end
 
   it 'returns an instance of the token' do
-    parser = XinetdConfig::Token::Parser::IncludeStatementParser.new
     expect(parser.tokenize(XinetdConfig::Token::IncludeToken::TOKEN)).to include XinetdConfig::Token::IncludeToken
   end
 
   it 'returns a list with instances of the include and the include path tokens' do
-    parser = XinetdConfig::Token::Parser::IncludeStatementParser.new
     tokens = parser.tokenize('include /some/file')
     [
       XinetdConfig::Token::IncludeToken,

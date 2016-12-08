@@ -10,6 +10,9 @@ RSpec.configure do |config|
   end
 end
 
+##
+# Helper classes
+##
 class ChainedParser < XinetdConfig::Token::Parser::BaseParser
   def tokenize(line, tokens_list=[])
   end
@@ -17,3 +20,7 @@ end
 
 class WrongChainedParser
 end
+
+class WrongFactory
+end
+

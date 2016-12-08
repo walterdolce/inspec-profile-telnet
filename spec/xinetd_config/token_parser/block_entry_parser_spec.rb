@@ -1,16 +1,18 @@
 describe XinetdConfig::Token::Parser::BlockEntryParser do
 
+  let (:parser) {
+    XinetdConfig::Token::Parser::BlockEntryParser.new
+  }
+
   it 'is of type XinetdConfig::Token::Parser::BaseParser' do
-    expect(XinetdConfig::Token::Parser::BlockEntryParser.new).to be_kind_of XinetdConfig::Token::Parser::BaseParser
+    expect(parser).to be_kind_of XinetdConfig::Token::Parser::BaseParser
   end
 
   it 'returns null when there is nothing to tokenize' do
-    parser = XinetdConfig::Token::Parser::BlockEntryParser.new
     expect(parser.tokenize('foo')).to eq nil
   end
 
   it 'returns an instance of the token' do
-    parser = XinetdConfig::Token::Parser::BlockEntryParser.new
     {
       XinetdConfig::Token::EntryBeginToken::TOKEN => XinetdConfig::Token::EntryBeginToken,
       XinetdConfig::Token::EntryEndToken::TOKEN => XinetdConfig::Token::EntryEndToken

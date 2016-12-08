@@ -1,16 +1,18 @@
 describe XinetdConfig::Token::Parser::DefaultsStatementParser do
 
+  let (:parser) {
+    XinetdConfig::Token::Parser::DefaultsStatementParser.new
+  }
+
   it 'is of type XinetdConfig::Token::Parser::BaseParser' do
-    expect(XinetdConfig::Token::Parser::DefaultsStatementParser.new).to be_kind_of XinetdConfig::Token::Parser::BaseParser
+    expect(parser).to be_kind_of XinetdConfig::Token::Parser::BaseParser
   end
 
   it 'returns null when there is nothing to tokenize' do
-    parser = XinetdConfig::Token::Parser::DefaultsStatementParser.new
     expect(parser.tokenize('foo')).to eq nil
   end
 
   it 'returns an instance of the token' do
-    parser = XinetdConfig::Token::Parser::DefaultsStatementParser.new
     expect(parser.tokenize(XinetdConfig::Token::DefaultsToken::TOKEN)).to include XinetdConfig::Token::DefaultsToken
   end
 

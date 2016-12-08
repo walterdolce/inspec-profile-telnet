@@ -1,21 +1,22 @@
 describe XinetdConfig::Token::Parser::ServiceStatementParser do
 
+  let (:parser) {
+    XinetdConfig::Token::Parser::ServiceStatementParser.new
+  }
+
   it 'is of type XinetdConfig::Token::Parser::BaseParser' do
-    expect(XinetdConfig::Token::Parser::ServiceStatementParser.new).to be_kind_of XinetdConfig::Token::Parser::BaseParser
+    expect(parser).to be_kind_of XinetdConfig::Token::Parser::BaseParser
   end
 
   it 'returns null when there is nothing to tokenize' do
-    parser = XinetdConfig::Token::Parser::ServiceStatementParser.new
     expect(parser.tokenize('foo')).to eq nil
   end
 
   it 'returns an instance of the token' do
-    parser = XinetdConfig::Token::Parser::ServiceStatementParser.new
     expect(parser.tokenize(XinetdConfig::Token::ServiceToken::TOKEN)).to include XinetdConfig::Token::ServiceToken
   end
 
   it 'returns a list with instances of the service and service name tokens' do
-    parser = XinetdConfig::Token::Parser::ServiceStatementParser.new
     tokens = parser.tokenize('service telnet')
     [
       XinetdConfig::Token::ServiceToken,
