@@ -17,6 +17,22 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
     ).to include XinetdConfig::Token::ServiceAttributes::UnrecognisedAttributeToken
   end
 
+  it 'tokenizes instances of XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::UnrecognisedAttributeValueToken by default when unsupported service attribute values are parsed' do
+    tokens = parser.tokenize('type = FOO', tokens_list)
+    expected_tokens = [
+      XinetdConfig::Token::EntryBeginToken,
+      XinetdConfig::Token::ServiceAttributes::TypeAttributeToken,
+      XinetdConfig::Token::Operators::AssignmentToken,
+      XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::UnrecognisedAttributeValueToken,
+    ]
+
+    expect(tokens.length).to eq(expected_tokens.length)
+
+    tokens.each_with_index { |token, i|
+      expect(token).to be_kind_of expected_tokens.at(i)
+    }
+  end
+
   it 'returns an instance of XinetdConfig::Token::ServiceAttributes::TokenFactory as default token factory' do
     expect(parser.token_factory).to be_kind_of XinetdConfig::Token::ServiceAttributes::TokenFactory
   end

@@ -19,6 +19,9 @@ module XinetdConfig
       module ServiceAttributeValues
         class Base < XinetdConfig::Token::Base
         end
+
+        class UnrecognisedAttributeValueToken < Base
+        end
       end
     end
   end
