@@ -20,7 +20,7 @@ module XinetdConfig
         class Base < XinetdConfig::Token::Base
         end
 
-        class UnrecognisedAttributeValueToken < Base
+        class InvalidValueToken < Base
         end
       end
     end

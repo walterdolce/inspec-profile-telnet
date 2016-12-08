@@ -28,7 +28,11 @@ module XinetdConfig
               if Token::SERVICE_ATTRIBUTE_TOKENS.include? service_attribute
                 case service_attribute
                   when Token::ServiceAttributes::AccessTimesAttributeToken::TOKEN
-                    token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::AccessTimesValueToken.new(line)
+                    if service_attribute_value.match(/^(([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]))-(([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]))$/)
+                      token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::AccessTimesValueToken.new(line)
+                    else
+                      token = Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   when Token::ServiceAttributes::BannerAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BannerValueToken.new(line)
                   when Token::ServiceAttributes::BannerFailAttributeToken::TOKEN
@@ -42,11 +46,19 @@ module XinetdConfig
                   when Token::ServiceAttributes::DenyTimeAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DenyTimeValueToken.new(line)
                   when Token::ServiceAttributes::DisableAttributeToken::TOKEN
-                    token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DisableValueToken.new(line)
+                    if %w(yes no).include? service_attribute_value
+                      token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DisableValueToken.new(line)
+                    else
+                      token = Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   when Token::ServiceAttributes::EnvAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::EnvValueToken.new(line)
                   when Token::ServiceAttributes::FlagsAttributeToken::TOKEN
-                    token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::FlagsValueToken.new(line)
+                    if %w(INTERCEPT NORETRY IDONLY NAMEINARGS NODELAY KEEPALIVE NOLIBWRAP SENSOR IPv4 IPv6 LABELED REUSE).include? service_attribute_value
+                      token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::FlagsValueToken.new(line)
+                    else
+                      token = Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   when Token::ServiceAttributes::GroupAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupValueToken.new(line)
                   when Token::ServiceAttributes::GroupsAttributeToken::TOKEN
@@ -54,7 +66,11 @@ module XinetdConfig
                   when Token::ServiceAttributes::IdAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::IdValueToken.new(line)
                   when Token::ServiceAttributes::InstancesAttributeToken::TOKEN
-                    token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InstancesValueToken.new(line)
+                    if service_attribute_value == 'UNLIMITED' || is_numeric?(service_attribute_value)
+                      token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InstancesValueToken.new(line)
+                    else
+                      token = Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   when Token::ServiceAttributes::InterfaceAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InterfaceValueToken.new(line)
                   when Token::ServiceAttributes::LibwrapAttributeToken::TOKEN
@@ -70,7 +86,11 @@ module XinetdConfig
                   when Token::ServiceAttributes::MdnsAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::MdnsValueToken.new(line)
                   when Token::ServiceAttributes::NiceAttributeToken::TOKEN
-                    token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NiceValueToken.new(line)
+                    if is_numeric?(service_attribute_value)
+                      token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NiceValueToken.new(line)
+                    else
+                      token = Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   when Token::ServiceAttributes::NoAccessAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NoAccessValueToken.new(line)
                   when Token::ServiceAttributes::OnlyFromAttributeToken::TOKEN
@@ -104,12 +124,16 @@ module XinetdConfig
                   when Token::ServiceAttributes::ServerAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerValueToken.new(line)
                   when Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
-                    token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken.new(line)
+                    if %w(stream dgram raw seqpacket).include? service_attribute_value
+                      token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken.new(line)
+                    else
+                      token = Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   when Token::ServiceAttributes::TypeAttributeToken::TOKEN
                     if %w(RPC INTERNAL TCPMUX TCPMUXPLUS UNLISTED).include? service_attribute_value
                       token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::TypeValueToken.new(line)
                     else
-                      token = Token::ServiceAttributes::ServiceAttributeValues::UnrecognisedAttributeValueToken.new(line)
+                      token = Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
                     end
                   when Token::ServiceAttributes::UmaskAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UmaskValueToken.new(line)
@@ -118,7 +142,11 @@ module XinetdConfig
                   when Token::ServiceAttributes::V6OnlyAttributeToken::TOKEN
                     token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::V6OnlyValueToken.new(line)
                   when Token::ServiceAttributes::WaitAttributeToken::TOKEN
-                    token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::WaitValueToken.new(line)
+                    if %w(yes no).include? service_attribute_value
+                      token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::WaitValueToken.new(line)
+                    else
+                      token = Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                 end
                 tokens_list << token
               end
@@ -129,10 +157,13 @@ module XinetdConfig
           end
         end
 
-
         private
 
         attr_writer :token_factory
+
+        def is_numeric?(attribute_value)
+          true if Float(attribute_value) rescue false
+        end
 
         def is_service_attribute(last_available_token, service_attribute)
           last_available_token == Token::EntryBeginToken && !(Token::FIRST_LEVEL_TOKENS.include? service_attribute)

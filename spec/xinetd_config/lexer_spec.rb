@@ -781,7 +781,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  access_times = 123
+  access_times = 0:59-23:01
 }
 CONTENT
         ).produces [
@@ -900,7 +900,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  disable = 123
+  disable = yes
 }
 CONTENT
         ).produces [
@@ -934,7 +934,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  flags = 123
+  flags = INTERCEPT
 }
 CONTENT
         ).produces [
@@ -1002,7 +1002,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  instances = foo
+  instances = UNLIMITED
 }
 CONTENT
         ).produces [
@@ -1138,7 +1138,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  nice = foo
+  nice = -1
 }
 CONTENT
         ).produces [
@@ -1427,7 +1427,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  socket_type = foo
+  socket_type = stream
 }
 CONTENT
         ).produces [
@@ -1516,7 +1516,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  wait = RPC
+  wait = yes
 }
 CONTENT
         ).produces [

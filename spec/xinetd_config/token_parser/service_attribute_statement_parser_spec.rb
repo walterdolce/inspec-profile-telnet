@@ -17,20 +17,127 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
     ).to include XinetdConfig::Token::ServiceAttributes::UnrecognisedAttributeToken
   end
 
-  it 'tokenizes instances of XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::UnrecognisedAttributeValueToken by default when unsupported service attribute values are parsed' do
-    tokens = parser.tokenize('type = FOO', tokens_list)
-    expected_tokens = [
-      XinetdConfig::Token::EntryBeginToken,
-      XinetdConfig::Token::ServiceAttributes::TypeAttributeToken,
-      XinetdConfig::Token::Operators::AssignmentToken,
-      XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::UnrecognisedAttributeValueToken,
-    ]
+  describe 'Tokenizing service attribute values' do
+    it 'tokenizes not supported values assigned to the "type" service attribute as invalid' do
+      tokens = parser.tokenize('type = FOO', tokens_list)
+      expected_tokens = [
+        XinetdConfig::Token::EntryBeginToken,
+        XinetdConfig::Token::ServiceAttributes::TypeAttributeToken,
+        XinetdConfig::Token::Operators::AssignmentToken,
+        XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+      ]
 
-    expect(tokens.length).to eq(expected_tokens.length)
+      expect(tokens.length).to eq(expected_tokens.length)
 
-    tokens.each_with_index { |token, i|
-      expect(token).to be_kind_of expected_tokens.at(i)
-    }
+      tokens.each_with_index { |token, i|
+        expect(token).to be_kind_of expected_tokens.at(i)
+      }
+    end
+    it 'tokenizes not supported values assigned to the "flags" service attribute as invalid' do
+      tokens = parser.tokenize('flags = FOO', tokens_list)
+      expected_tokens = [
+        XinetdConfig::Token::EntryBeginToken,
+        XinetdConfig::Token::ServiceAttributes::FlagsAttributeToken,
+        XinetdConfig::Token::Operators::AssignmentToken,
+        XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+      ]
+
+      expect(tokens.length).to eq(expected_tokens.length)
+
+      tokens.each_with_index { |token, i|
+        expect(token).to be_kind_of expected_tokens.at(i)
+      }
+    end
+    it 'tokenizes not supported values assigned to the "disable" service attribute as invalid' do
+      tokens = parser.tokenize('disable = foo', tokens_list)
+      expected_tokens = [
+        XinetdConfig::Token::EntryBeginToken,
+        XinetdConfig::Token::ServiceAttributes::DisableAttributeToken,
+        XinetdConfig::Token::Operators::AssignmentToken,
+        XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+      ]
+
+      expect(tokens.length).to eq(expected_tokens.length)
+
+      tokens.each_with_index { |token, i|
+        expect(token).to be_kind_of expected_tokens.at(i)
+      }
+    end
+    it 'tokenizes not supported values assigned to the "socket_type" service attribute as invalid' do
+      tokens = parser.tokenize('socket_type = foo', tokens_list)
+      expected_tokens = [
+        XinetdConfig::Token::EntryBeginToken,
+        XinetdConfig::Token::ServiceAttributes::SocketTypeAttributeToken,
+        XinetdConfig::Token::Operators::AssignmentToken,
+        XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+      ]
+
+      expect(tokens.length).to eq(expected_tokens.length)
+
+      tokens.each_with_index { |token, i|
+        expect(token).to be_kind_of expected_tokens.at(i)
+      }
+    end
+    it 'tokenizes not supported values assigned to the "wait" service attribute as invalid' do
+      tokens = parser.tokenize('wait = foo', tokens_list)
+      expected_tokens = [
+        XinetdConfig::Token::EntryBeginToken,
+        XinetdConfig::Token::ServiceAttributes::WaitAttributeToken,
+        XinetdConfig::Token::Operators::AssignmentToken,
+        XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+      ]
+
+      expect(tokens.length).to eq(expected_tokens.length)
+
+      tokens.each_with_index { |token, i|
+        expect(token).to be_kind_of expected_tokens.at(i)
+      }
+    end
+    it 'tokenizes not supported values assigned to the "instances" service attribute as invalid' do
+      tokens = parser.tokenize('instances = foo', tokens_list)
+      expected_tokens = [
+        XinetdConfig::Token::EntryBeginToken,
+        XinetdConfig::Token::ServiceAttributes::InstancesAttributeToken,
+        XinetdConfig::Token::Operators::AssignmentToken,
+        XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+      ]
+
+      expect(tokens.length).to eq(expected_tokens.length)
+
+      tokens.each_with_index { |token, i|
+        expect(token).to be_kind_of expected_tokens.at(i)
+      }
+    end
+    it 'tokenizes not supported values assigned to the "nice" service attribute as invalid' do
+      tokens = parser.tokenize('nice = foo', tokens_list)
+      expected_tokens = [
+        XinetdConfig::Token::EntryBeginToken,
+        XinetdConfig::Token::ServiceAttributes::NiceAttributeToken,
+        XinetdConfig::Token::Operators::AssignmentToken,
+        XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+      ]
+
+      expect(tokens.length).to eq(expected_tokens.length)
+
+      tokens.each_with_index { |token, i|
+        expect(token).to be_kind_of expected_tokens.at(i)
+      }
+    end
+    it 'tokenizes not supported values assigned to the "access_times" service attribute as invalid' do
+      tokens = parser.tokenize('access_times = foo', tokens_list)
+      expected_tokens = [
+        XinetdConfig::Token::EntryBeginToken,
+        XinetdConfig::Token::ServiceAttributes::AccessTimesAttributeToken,
+        XinetdConfig::Token::Operators::AssignmentToken,
+        XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+      ]
+
+      expect(tokens.length).to eq(expected_tokens.length)
+
+      tokens.each_with_index { |token, i|
+        expect(token).to be_kind_of expected_tokens.at(i)
+      }
+    end
   end
 
   it 'returns an instance of XinetdConfig::Token::ServiceAttributes::TokenFactory as default token factory' do
