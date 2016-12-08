@@ -138,6 +138,22 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
         expect(token).to be_kind_of expected_tokens.at(i)
       }
     end
+    it 'tokenizes not supported values assigned to the "log_type" service attribute as invalid' do
+      pending 'Implement from this one on (https://linux.die.net/man/5/xinetd.conf)'
+      # tokens = parser.tokenize('access_times = foo', tokens_list)
+      # expected_tokens = [
+      #   XinetdConfig::Token::EntryBeginToken,
+      #   XinetdConfig::Token::ServiceAttributes::AccessTimesAttributeToken,
+      #   XinetdConfig::Token::Operators::AssignmentToken,
+      #   XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+      # ]
+      #
+      # expect(tokens.length).to eq(expected_tokens.length)
+      #
+      # tokens.each_with_index { |token, i|
+      #   expect(token).to be_kind_of expected_tokens.at(i)
+      # }
+    end
   end
 
   it 'returns an instance of XinetdConfig::Token::ServiceAttributes::TokenFactory as default token factory' do
