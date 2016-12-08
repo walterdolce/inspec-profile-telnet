@@ -4,15 +4,19 @@ module Helpers
     include ::RSpec::Matchers
 
     def assert_tokenization_of(configuration)
+      @configuration = configuration
       @tokens = XinetdConfig::Lexer.new(
-        configuration,
+        @configuration,
         nil,
         XinetdConfig::Token::Parser::BlockEntryParser.new(
           XinetdConfig::Token::Parser::CommentParser.new(
             XinetdConfig::Token::Parser::DefaultsStatementParser.new(
               XinetdConfig::Token::Parser::ServiceStatementParser.new(
                 XinetdConfig::Token::Parser::IncludeStatementParser.new(
-                  XinetdConfig::Token::Parser::IncludeDirStatementParser.new
+                  XinetdConfig::Token::Parser::IncludeDirStatementParser.new(
+                    XinetdConfig::Token::Parser::InternalBlockStatementParser.new(
+                    )
+                  )
                 )
               )
             )
@@ -24,7 +28,7 @@ module Helpers
 
     def produces(expected_tokens)
       if @tokens.length != expected_tokens.length
-        raise "The number of tokens produced does not match the number of expected tokens.\nExpected: %s\nGot: %s" % [expected_tokens.inspect, @tokens.inspect]
+        raise "The number of tokens produced does not match the number of expected tokens.\nExpected: %s\nGot: %s\nConfiguration parsed:\n%s\n" % [expected_tokens.inspect, @tokens.inspect, @configuration]
       end
       (0...@tokens.length).each { |i|
         expect(@tokens[i]).to be_kind_of expected_tokens[i]

@@ -9,6 +9,8 @@ module XinetdConfig
         module TypeAttributeValues
           class RpcValueToken < XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::Base
           end
+          class IdValueToken < XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::Base
+          end
         end
       end
     end

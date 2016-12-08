@@ -11,7 +11,7 @@ describe XinetdConfig::Token::Parser::IncludeStatementParser do
 
   it 'returns an instance of the token' do
     parser = XinetdConfig::Token::Parser::IncludeStatementParser.new
-    expect(parser.tokenize(XinetdConfig::Token::IncludeToken::TOKEN)).to be_kind_of XinetdConfig::Token::IncludeToken
+    expect(parser.tokenize(XinetdConfig::Token::IncludeToken::TOKEN)).to include XinetdConfig::Token::IncludeToken
   end
 
   it 'returns a list with instances of the include and the include path tokens' do
@@ -27,11 +27,11 @@ describe XinetdConfig::Token::Parser::IncludeStatementParser do
 
   it 'calls the chained parser if available when it cannot tokenize on its own' do
     class ChainedParser < XinetdConfig::Token::Parser::BaseParser
-      def tokenize(line)
+      def tokenize(line, tokens_list=[])
       end
     end
     chained_parser = ChainedParser.new
-    expect(chained_parser).to receive(:tokenize).with('foo')
+    expect(chained_parser).to receive(:tokenize).with('foo', [])
     parser = XinetdConfig::Token::Parser::IncludeStatementParser.new(chained_parser)
     parser.tokenize('foo')
   end

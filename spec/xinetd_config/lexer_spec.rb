@@ -809,7 +809,7 @@ CONTENT
                      XinetdConfig::Token::EntryBeginToken,
                      XinetdConfig::Token::ServiceAttributes::IdAttributeToken,
                      XinetdConfig::Token::Operators::AssignmentToken,
-                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::IdValueToken,
                      XinetdConfig::Token::EntryEndToken,
                    ]
       end

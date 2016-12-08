@@ -15,17 +15,17 @@ describe XinetdConfig::Token::Parser::BlockEntryParser do
       XinetdConfig::Token::EntryBeginToken::TOKEN => XinetdConfig::Token::EntryBeginToken,
       XinetdConfig::Token::EntryEndToken::TOKEN => XinetdConfig::Token::EntryEndToken
     }.each_pair do |token, token_instance|
-      expect(parser.tokenize(token)).to be_kind_of token_instance
+      expect(parser.tokenize(token)).to include token_instance
     end
   end
 
   it 'calls the chained parser if available when it cannot tokenize on its own' do
     class ChainedParser < XinetdConfig::Token::Parser::BaseParser
-      def tokenize(line)
+      def tokenize(line, tokens_list=[])
       end
     end
     chained_parser = ChainedParser.new
-    expect(chained_parser).to receive(:tokenize).with('foo')
+    expect(chained_parser).to receive(:tokenize).with('foo', [])
     parser = XinetdConfig::Token::Parser::BlockEntryParser.new(chained_parser)
     parser.tokenize('foo')
   end

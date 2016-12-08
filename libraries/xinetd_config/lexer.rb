@@ -18,30 +18,8 @@ module XinetdConfig
       @raw_configuration.each_line do |line|
         line = line.strip.chomp
         unless line.empty?
-          split_line = line.split(' ')
-          first_line_word = split_line.shift
-          assignment_operator = second_line_word = split_line.shift
-          service_attribute_value = split_line.shift
-          last_available_token = @tokens.last.class
-
-
           if @configuration_parser
-            token = @configuration_parser.tokenize(line)
-            @tokens << token if token
-          end
-
-          if last_available_token == Token::EntryBeginToken && !(Token::FIRST_LEVEL_TOKENS.include? first_line_word)
-            @tokens << @token_factory.create(first_line_word)
-            if assignment_operator
-              @tokens << @token_factory.create(assignment_operator)
-            end
-            if service_attribute_value
-              if (Token::SERVICE_ATTRIBUTE_TOKENS.include? first_line_word) && first_line_word == 'type'
-                @tokens << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RpcValueToken.new(line)
-              else
-                @tokens << Token::ServiceNameToken.new(line)
-              end
-            end
+            @tokens = @configuration_parser.tokenize(line, @tokens.flatten)
           end
         end
       end
