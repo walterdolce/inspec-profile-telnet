@@ -796,6 +796,210 @@ CONTENT
     end
 
     describe 'Tokenizing service block attribute values' do
+      it 'tokenizes the values of the service attribute access_times' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  access_times = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::AccessTimesAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::AccessTimesValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute banner' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  banner = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::BannerAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BannerValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute banner fail' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  banner_fail = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::BannerFailAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BannerFailValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute banner success' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  banner_success = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::BannerSuccessAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BannerSuccessValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute bind' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  bind = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::BindAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BindValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute cps' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  cps = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::CpsAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::CpsValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute deny_time' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  deny_time = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::DenyTimeAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DenyTimeValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute disable' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  disable = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::DisableAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DisableValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute env' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  env = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::EnvAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::EnvValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute flags' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  flags = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::FlagsAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::FlagsValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute group' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  group = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::GroupAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the values of the service attribute groups' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  groups = 123
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::GroupsAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupsValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
       it 'tokenizes the value of the service attribute id' do
         assert_tokenization_of(<<CONTENT
 service telnet
@@ -813,7 +1017,448 @@ CONTENT
                      XinetdConfig::Token::EntryEndToken,
                    ]
       end
-
+      it 'tokenizes the value of the service attribute instances' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  instances = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::InstancesAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InstancesValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute interface' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  interface = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::InterfaceAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InterfaceValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute libwrap' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  libwrap = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::LibwrapAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LibwrapValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute log_on_failure' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  log_on_failure = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::LogOnFailureAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LogOnFailureValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute log_on_success' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  log_on_success = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::LogOnSuccessAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LogOnSuccessValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute log_type' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  log_type = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::LogTypeAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LogTypeValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute max_load' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  max_load = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::MaxLoadAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::MaxLoadValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute mdns' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  mdns = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::MdnsAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::MdnsValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute nice' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  nice = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::NiceAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NiceValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute no_access' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  no_access = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::NoAccessAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NoAccessValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute only_from' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  only_from = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::OnlyFromAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::OnlyFromValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute passenv' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  passenv = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::PassenvAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::PassenvValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute per_source' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  per_source = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::PerSourceAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::PerSourceValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute port' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  port = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::PortAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::PortValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute protocol' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  protocol = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::ProtocolAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ProtocolValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute redirect' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  redirect = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::RedirectAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RedirectValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute rlimit_as' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  rlimit_as = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::RLimitAsAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitAsValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute rlimit_cpu' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  rlimit_cpu = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::RLimitCpuAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitCpuValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute rlimit_data' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  rlimit_data = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::RLimitDataAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitDataValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute rlimit_rss' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  rlimit_rss = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::RLimitRssAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitRssValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute rlimit_stack' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  rlimit_stack = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::RLimitStackAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitStackValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute rpc_number' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  rpc_number = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::RpcNumberAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RpcNumberValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute rpc_version' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  rpc_version = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::RpcVersionAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RpcVersionValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute server_args' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  server_args = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::ServerArgsAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerArgsValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute server' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  server = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::ServerAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
+      it 'tokenizes the value of the service attribute socket_type' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  socket_type = foo
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::SocketTypeAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+      end
       it 'tokenizes the values of the service attribute type' do
         assert_tokenization_of(<<CONTENT
 service telnet
@@ -827,175 +1472,83 @@ CONTENT
                      XinetdConfig::Token::EntryBeginToken,
                      XinetdConfig::Token::ServiceAttributes::TypeAttributeToken,
                      XinetdConfig::Token::Operators::AssignmentToken,
-                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RpcValueToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::TypeValueToken,
                      XinetdConfig::Token::EntryEndToken,
                    ]
 
       end
+      it 'tokenizes the values of the service attribute umask' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  umask = RPC
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::UmaskAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UmaskValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
 
-      # it 'tokenizes the values of the service attribute flags' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute disable' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute socket_type' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute protocol' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute wait' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute user' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute group' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute instances' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute nice' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute server' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute server_args' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute only_from' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute access_times' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute log_type' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute log_on_success' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute log_on_failure' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute rpc_version' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute rpc_number' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute env' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute passenv' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute port' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute redirect' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute bind' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute interface' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute banner' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute banner_success' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute banner_failure' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute per_source' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute cps' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute max_load' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute groups' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute mdns' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute umask' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute enabled' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute rlimit_as' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute rlimit_cpu' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute rlimit_files' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute rlimit_data' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute rlimit_rss' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute rlimit_stack' do
-      #   pending 'Implement this'
-      # end
-      #
-      # it 'tokenizes the values of the service attribute deny_time' do
-      #   pending 'Implement this'
-      # end
+      end
+      it 'tokenizes the values of the service attribute user' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  user = RPC
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::UserAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UserValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+
+      end
+      it 'tokenizes the values of the service attribute v6only' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  v6only = RPC
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::V6OnlyAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::V6OnlyValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+
+      end
+      it 'tokenizes the values of the service attribute wait' do
+        assert_tokenization_of(<<CONTENT
+service telnet
+{
+  wait = RPC
+}
+CONTENT
+        ).produces [
+                     XinetdConfig::Token::ServiceToken,
+                     XinetdConfig::Token::ServiceNameToken,
+                     XinetdConfig::Token::EntryBeginToken,
+                     XinetdConfig::Token::ServiceAttributes::WaitAttributeToken,
+                     XinetdConfig::Token::Operators::AssignmentToken,
+                     XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::WaitValueToken,
+                     XinetdConfig::Token::EntryEndToken,
+                   ]
+
+      end
     end
 
     describe 'Tokenizing defaults blocks' do

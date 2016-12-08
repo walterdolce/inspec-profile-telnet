@@ -14,7 +14,7 @@ module Helpers
               XinetdConfig::Token::Parser::ServiceStatementParser.new(
                 XinetdConfig::Token::Parser::IncludeStatementParser.new(
                   XinetdConfig::Token::Parser::IncludeDirStatementParser.new(
-                    XinetdConfig::Token::Parser::InternalBlockStatementParser.new(
+                    XinetdConfig::Token::Parser::ServiceAttributeStatementParser.new(
                     )
                   )
                 )

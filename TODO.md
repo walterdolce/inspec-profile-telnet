@@ -1,3 +1,6 @@
+- Implement logic to tokenize the config files defined in the include/includedir statements
+  The result of the tokenization should be fed into the general list of tokens parsed
+- Implement logic to check whether the configuration parsed is valid
 - [IN PROGRESS] Implement logic to parse xinetd config files so to detect telnet related config
 - Implement logic to parse inetd config files so to detect telnet related config
 - Add integration test which verifies the presence of a warning 
