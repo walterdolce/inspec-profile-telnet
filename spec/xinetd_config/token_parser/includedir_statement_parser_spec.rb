@@ -19,7 +19,7 @@ describe XinetdConfig::Token::Parser::IncludeDirStatementParser do
     tokens = parser.tokenize('includedir /some/file')
     [
       XinetdConfig::Token::IncludeDirToken,
-      XinetdConfig::Token::IncludePathToken,
+      XinetdConfig::Token::IncludedPathToken,
     ].each do |token_instance|
       expect(tokens).to include token_instance
     end

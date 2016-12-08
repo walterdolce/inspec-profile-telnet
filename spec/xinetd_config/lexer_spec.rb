@@ -1584,7 +1584,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 include /etc/xinetd/telnet
 CONTENT
-        ).produces [XinetdConfig::Token::IncludeToken, XinetdConfig::Token::IncludePathToken]
+        ).produces [XinetdConfig::Token::IncludeToken, XinetdConfig::Token::IncludedPathToken]
       end
       #TODO add "it tokenizes include statements whose path contain spaces. Ex: include '/etc/some file/path'"
     end
@@ -1600,7 +1600,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 includedir /etc/xinet.d
 CONTENT
-        ).produces [XinetdConfig::Token::IncludeDirToken, XinetdConfig::Token::IncludePathToken]
+        ).produces [XinetdConfig::Token::IncludeDirToken, XinetdConfig::Token::IncludedPathToken]
       end
       #TODO add "it tokenizes includedir statements whose path contain spaces. Ex: include '/etc/some file/path'"
     end

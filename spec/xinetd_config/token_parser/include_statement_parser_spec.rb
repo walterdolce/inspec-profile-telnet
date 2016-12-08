@@ -19,7 +19,7 @@ describe XinetdConfig::Token::Parser::IncludeStatementParser do
     tokens = parser.tokenize('include /some/file')
     [
       XinetdConfig::Token::IncludeToken,
-      XinetdConfig::Token::IncludePathToken,
+      XinetdConfig::Token::IncludedPathToken,
     ].each do |token_instance|
       expect(tokens).to include token_instance
     end
