@@ -9,3 +9,11 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 end
+
+class ChainedParser < XinetdConfig::Token::Parser::BaseParser
+  def tokenize(line, tokens_list=[])
+  end
+end
+
+class WrongChainedParser
+end

@@ -1,8 +1,6 @@
 describe XinetdConfig::Token::Parser::BaseParser do
   it 'raises an exception if the chained parser is not of the correct type' do
     expect {
-      class WrongChainedParser
-      end
       XinetdConfig::Token::Parser::BaseParser.new(WrongChainedParser.new)
     }.to raise_error(TypeError)
   end

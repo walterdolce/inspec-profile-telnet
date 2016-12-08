@@ -26,10 +26,6 @@ describe XinetdConfig::Token::Parser::ServiceStatementParser do
   end
 
   it 'calls the chained parser if available when it cannot tokenize on its own' do
-    class ChainedParser < XinetdConfig::Token::Parser::BaseParser
-      def tokenize(line, tokens_list=[])
-      end
-    end
     chained_parser = ChainedParser.new
     expect(chained_parser).to receive(:tokenize).with('foo', [])
     parser = XinetdConfig::Token::Parser::ServiceStatementParser.new(chained_parser)
