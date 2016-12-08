@@ -48,7 +48,7 @@ describe XinetdConfig::Lexer do
         assert_tokenization_of(<<CONTENT
         # I am a comment
 CONTENT
-        ).produces [XinetdConfig::Token::CommentBeginToken]
+        ).produces [XinetdConfig::Token::CommentToken]
       end
     end
 

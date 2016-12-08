@@ -8,13 +8,14 @@ module XinetdConfig
       end
 
       private
+
       attr_writer :raw_token
     end
 
     module ServiceAttributes
       class Base < XinetdConfig::Token::Base
       end
-      
+
       module ServiceAttributeValues
         class Base < XinetdConfig::Token::Base
         end

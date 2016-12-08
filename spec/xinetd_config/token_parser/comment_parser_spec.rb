@@ -11,7 +11,7 @@ describe XinetdConfig::Token::Parser::CommentParser do
 
   it 'returns an instance of the token' do
     parser = XinetdConfig::Token::Parser::CommentParser.new
-    expect(parser.tokenize('# a comment line')).to include XinetdConfig::Token::CommentBeginToken
+    expect(parser.tokenize('# a comment line')).to include XinetdConfig::Token::CommentToken
   end
 
   it 'calls the chained parser if available when it cannot tokenize on its own' do
