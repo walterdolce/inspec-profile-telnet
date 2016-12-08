@@ -1,25 +1,5 @@
 describe XinetdConfig::Lexer do
 
-  describe 'Using token factories' do
-    it 'returns an instance of XinetdConfig::Token::ServiceAttributes::TokenFactory as factory by default' do
-      lexer = XinetdConfig::Lexer.new
-      expect(lexer.token_factory).to be_kind_of XinetdConfig::Token::ServiceAttributes::TokenFactory
-    end
-    it 'returns an instance of the custom token factory when used' do
-      class SomeCustomTokenFactory < XinetdConfig::Token::ServiceAttributes::TokenFactory
-      end
-      lexer = XinetdConfig::Lexer.new('', SomeCustomTokenFactory.new)
-      expect(lexer.token_factory).to be_kind_of SomeCustomTokenFactory
-    end
-    it 'raises an exception when the custom factory is not of the correct type' do
-      expect {
-        class SomeCustomFactory
-        end
-        XinetdConfig::Lexer.new('', SomeCustomFactory.new)
-      }.to raise_error(TypeError)
-    end
-  end
-
   describe 'Reading empty configuration file(s)' do
     it 'returns an empty list of tokens by default' do
       lexer = XinetdConfig::Lexer.new

@@ -16,107 +16,107 @@ module XinetdConfig
 
         def tokenize(line, tokens_list=[])
           split_line = line.split(' ')
-          first_line_word = split_line.shift
-          assignment_operator = second_line_word = split_line.shift
+          service_attribute = split_line.shift
+          assignment_operator = split_line.shift
           service_attribute_value = split_line.shift
-          last_available_token = tokens_list.last.class
-          if last_available_token == Token::EntryBeginToken && !(Token::FIRST_LEVEL_TOKENS.include? line.split(' ').shift)
-            tokens_list << @token_factory.create(first_line_word)
+          if is_service_attribute(tokens_list.last.class, service_attribute)
+            tokens_list << @token_factory.create(service_attribute)
             if assignment_operator
               tokens_list << @token_factory.create(assignment_operator)
             end
             if service_attribute_value
-              if Token::SERVICE_ATTRIBUTE_TOKENS.include? first_line_word
-                case first_line_word
+              if Token::SERVICE_ATTRIBUTE_TOKENS.include? service_attribute
+                case service_attribute
                 when Token::ServiceAttributes::AccessTimesAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::AccessTimesValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::AccessTimesValueToken.new(line)
                 when Token::ServiceAttributes::BannerAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BannerValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BannerValueToken.new(line)
                 when Token::ServiceAttributes::BannerFailAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BannerFailValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BannerFailValueToken.new(line)
                 when Token::ServiceAttributes::BannerSuccessAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BannerSuccessValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BannerSuccessValueToken.new(line)
                 when Token::ServiceAttributes::BindAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BindValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::BindValueToken.new(line)
                 when Token::ServiceAttributes::CpsAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::CpsValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::CpsValueToken.new(line)
                 when Token::ServiceAttributes::DenyTimeAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DenyTimeValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DenyTimeValueToken.new(line)
                 when Token::ServiceAttributes::DisableAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DisableValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DisableValueToken.new(line)
                 when Token::ServiceAttributes::EnvAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::EnvValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::EnvValueToken.new(line)
                 when Token::ServiceAttributes::FlagsAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::FlagsValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::FlagsValueToken.new(line)
                 when Token::ServiceAttributes::GroupAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupValueToken.new(line)
                 when Token::ServiceAttributes::GroupsAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupsValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupsValueToken.new(line)
                 when Token::ServiceAttributes::IdAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::IdValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::IdValueToken.new(line)
                 when Token::ServiceAttributes::InstancesAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InstancesValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InstancesValueToken.new(line)
                 when Token::ServiceAttributes::InterfaceAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InterfaceValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InterfaceValueToken.new(line)
                 when Token::ServiceAttributes::LibwrapAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LibwrapValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LibwrapValueToken.new(line)
                 when Token::ServiceAttributes::LogOnFailureAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LogOnFailureValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LogOnFailureValueToken.new(line)
                 when Token::ServiceAttributes::LogOnSuccessAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LogOnSuccessValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LogOnSuccessValueToken.new(line)
                 when Token::ServiceAttributes::LogTypeAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LogTypeValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LogTypeValueToken.new(line)
                 when Token::ServiceAttributes::MaxLoadAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::MaxLoadValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::MaxLoadValueToken.new(line)
                 when Token::ServiceAttributes::MdnsAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::MdnsValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::MdnsValueToken.new(line)
                 when Token::ServiceAttributes::NiceAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NiceValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NiceValueToken.new(line)
                 when Token::ServiceAttributes::NoAccessAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NoAccessValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NoAccessValueToken.new(line)
                 when Token::ServiceAttributes::OnlyFromAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::OnlyFromValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::OnlyFromValueToken.new(line)
                 when Token::ServiceAttributes::PassenvAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::PassenvValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::PassenvValueToken.new(line)
                 when Token::ServiceAttributes::PerSourceAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::PerSourceValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::PerSourceValueToken.new(line)
                 when Token::ServiceAttributes::PortAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::PortValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::PortValueToken.new(line)
                 when Token::ServiceAttributes::ProtocolAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ProtocolValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ProtocolValueToken.new(line)
                 when Token::ServiceAttributes::RedirectAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RedirectValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RedirectValueToken.new(line)
                 when Token::ServiceAttributes::RLimitAsAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitAsValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitAsValueToken.new(line)
                 when Token::ServiceAttributes::RLimitCpuAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitCpuValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitCpuValueToken.new(line)
                 when Token::ServiceAttributes::RLimitDataAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitDataValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitDataValueToken.new(line)
                 when Token::ServiceAttributes::RLimitRssAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitRssValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitRssValueToken.new(line)
                 when Token::ServiceAttributes::RLimitStackAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitStackValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RLimitStackValueToken.new(line)
                 when Token::ServiceAttributes::RpcNumberAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RpcNumberValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RpcNumberValueToken.new(line)
                 when Token::ServiceAttributes::RpcVersionAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RpcVersionValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RpcVersionValueToken.new(line)
                 when Token::ServiceAttributes::ServerArgsAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerArgsValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerArgsValueToken.new(line)
                 when Token::ServiceAttributes::ServerAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerValueToken.new(line)
                 when Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken.new(line)
                 when Token::ServiceAttributes::TypeAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::TypeValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::TypeValueToken.new(line)
                 when Token::ServiceAttributes::UmaskAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UmaskValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UmaskValueToken.new(line)
                 when Token::ServiceAttributes::UserAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UserValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UserValueToken.new(line)
                 when Token::ServiceAttributes::V6OnlyAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::V6OnlyValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::V6OnlyValueToken.new(line)
                 when Token::ServiceAttributes::WaitAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::WaitValueToken.new(line)
+                  token = Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::WaitValueToken.new(line)
                 end
+                tokens_list << token
               end
             end
             tokens_list
@@ -125,10 +125,14 @@ module XinetdConfig
           end
         end
 
+
         private
 
         attr_writer :token_factory
 
+        def is_service_attribute(last_available_token, service_attribute)
+          last_available_token == Token::EntryBeginToken && !(Token::FIRST_LEVEL_TOKENS.include? service_attribute)
+        end
       end
     end
   end

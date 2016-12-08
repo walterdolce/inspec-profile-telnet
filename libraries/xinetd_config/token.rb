@@ -69,16 +69,11 @@ module XinetdConfig
       Token::ServiceAttributes::V6OnlyAttributeToken::TOKEN,
       Token::ServiceAttributes::WaitAttributeToken::TOKEN,
     ]
-  end
-end
 
-module XinetdConfig
-  module Token
     module ServiceAttributes
       class TokenFactory
         def create(line='')
-          first_line_word = line
-          case first_line_word
+          case line
             when SocketTypeAttributeToken::TOKEN
               SocketTypeAttributeToken.new(line)
             when ProtocolAttributeToken::TOKEN
@@ -181,3 +176,4 @@ module XinetdConfig
     end
   end
 end
+

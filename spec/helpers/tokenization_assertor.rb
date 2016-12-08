@@ -7,7 +7,6 @@ module Helpers
       @configuration = configuration
       @tokens = XinetdConfig::Lexer.new(
         @configuration,
-        nil,
         XinetdConfig::Token::Parser::BlockEntryParser.new(
           XinetdConfig::Token::Parser::CommentParser.new(
             XinetdConfig::Token::Parser::DefaultsStatementParser.new(

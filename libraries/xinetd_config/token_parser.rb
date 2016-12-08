@@ -10,8 +10,8 @@ module XinetdConfig
           @chained_parser = chained_parser
         end
 
-        def tokenize(line)
-          raise_not_implemented_error_for(__method__)
+        def tokenize(line, tokens_list=[])
+          raise NotImplementedError, 'Method "%s" must be implemented by concrete classes' % __method__
         end
 
         protected
@@ -21,10 +21,6 @@ module XinetdConfig
         private
 
         attr_writer :chained_parser
-
-        def raise_not_implemented_error_for(method)
-          raise NotImplementedError, 'Method "%s" must be implemented by concrete classes' % method
-        end
       end
     end
   end
