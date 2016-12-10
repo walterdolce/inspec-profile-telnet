@@ -1,3 +1,4 @@
+
 describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
 
   let(:parser) {
@@ -27,12 +28,19 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::Operators::AssignmentToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
-  
-        expect(tokens.length).to eq(expected_tokens.length)
-  
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+
+        assert_tokens_match(expected_tokens, tokens)
+
+        tokens = parser.tokenize('type = RPC FOO INTERNAL', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::TypeAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::TypeValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::TypeValueToken,
+        ]
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "flags" service attribute as invalid' do
         tokens = parser.tokenize('flags = FOO', tokens_list)
@@ -42,12 +50,8 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::Operators::AssignmentToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
-  
-        expect(tokens.length).to eq(expected_tokens.length)
-  
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "disable" service attribute as invalid' do
         tokens = parser.tokenize('disable = foo', tokens_list)
@@ -57,12 +61,8 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::Operators::AssignmentToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
-  
-        expect(tokens.length).to eq(expected_tokens.length)
-  
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "socket_type" service attribute as invalid' do
         tokens = parser.tokenize('socket_type = foo', tokens_list)
@@ -72,12 +72,8 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::Operators::AssignmentToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
-  
-        expect(tokens.length).to eq(expected_tokens.length)
-  
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "wait" service attribute as invalid' do
         tokens = parser.tokenize('wait = foo', tokens_list)
@@ -87,12 +83,8 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::Operators::AssignmentToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
-  
-        expect(tokens.length).to eq(expected_tokens.length)
-  
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "instances" service attribute as invalid' do
         tokens = parser.tokenize('instances = foo', tokens_list)
@@ -102,12 +94,8 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::Operators::AssignmentToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
-  
-        expect(tokens.length).to eq(expected_tokens.length)
-  
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "nice" service attribute as invalid' do
         tokens = parser.tokenize('nice = foo', tokens_list)
@@ -117,12 +105,8 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::Operators::AssignmentToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
-  
-        expect(tokens.length).to eq(expected_tokens.length)
-  
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "access_times" service attribute as invalid' do
         tokens = parser.tokenize('access_times = foo', tokens_list)
@@ -132,12 +116,8 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::Operators::AssignmentToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
-  
-        expect(tokens.length).to eq(expected_tokens.length)
-  
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "log_type" service attribute as invalid' do
         tokens = parser.tokenize('log_type = foo', tokens_list)
@@ -148,11 +128,7 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
 
-        expect(tokens.length).to eq(expected_tokens.length)
-
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "log_on_success" service attribute as invalid' do
         tokens = parser.tokenize('log_on_success = foo', tokens_list)
@@ -163,11 +139,7 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
 
-        expect(tokens.length).to eq(expected_tokens.length)
-
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "log_on_failure" service attribute as invalid' do
         tokens = parser.tokenize('log_on_failure = foo', tokens_list)
@@ -178,11 +150,7 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
 
-        expect(tokens.length).to eq(expected_tokens.length)
-
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "rpc_version" service attribute as invalid' do
         tokens = parser.tokenize('rpc_version = foo', tokens_list)
@@ -193,11 +161,7 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
 
-        expect(tokens.length).to eq(expected_tokens.length)
-
-        tokens.each_with_index { |token, i|
-          expect(token).to be_kind_of expected_tokens.at(i)
-        }
+        assert_tokens_match(expected_tokens, tokens)
       end
     end
   end
@@ -235,11 +199,7 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
       XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::IdValueToken,
     ]
 
-    expect(tokens.length).to eq(expected_tokens.length)
-
-    tokens.each_with_index { |token, i|
-      expect(token).to be_kind_of expected_tokens.at(i)
-    }
+    assert_tokens_match(expected_tokens, tokens)
   end
 
   it 'calls the chained parser if available when it cannot tokenize on its own' do

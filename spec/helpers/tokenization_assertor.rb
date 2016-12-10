@@ -44,4 +44,12 @@ module Helpers
   def assert_tokenization_of(configuration)
     TokenizationAssertor.new.assert_tokenization_of(configuration)
   end
+
+  def assert_tokens_match(expected_tokens, tokens)
+    expect(tokens.length).to eq(expected_tokens.length)
+  
+    tokens.each_with_index { |token, i|
+      expect(token).to be_kind_of expected_tokens.at(i)
+    }
+  end
 end
