@@ -1053,7 +1053,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  log_on_failure = foo
+  log_on_failure = HOST
 }
 CONTENT
         ).produces [
@@ -1070,7 +1070,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  log_on_success = foo
+  log_on_success = PID
 }
 CONTENT
         ).produces [
@@ -1087,7 +1087,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  log_type = foo
+  log_type = SYSLOG
 }
 CONTENT
         ).produces [
@@ -1376,7 +1376,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  rpc_version = foo
+  rpc_version = 123-123
 }
 CONTENT
         ).produces [
