@@ -58,10 +58,12 @@ module XinetdConfig
                 when Token::ServiceAttributes::EnvAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::EnvValueToken.new(line)
                 when Token::ServiceAttributes::FlagsAttributeToken::TOKEN
-                  if %w(INTERCEPT NORETRY IDONLY NAMEINARGS NODELAY KEEPALIVE NOLIBWRAP SENSOR IPv4 IPv6 LABELED REUSE).include? service_attribute_value
-                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::FlagsValueToken.new(line)
-                  else
-                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                  split_line.each do |flags_value|
+                    if %w(INTERCEPT NORETRY IDONLY NAMEINARGS NODELAY KEEPALIVE NOLIBWRAP SENSOR IPv4 IPv6 LABELED REUSE).include? flags_value
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::FlagsValueToken.new(line)
+                    else
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   end
                 when Token::ServiceAttributes::GroupAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupValueToken.new(line)

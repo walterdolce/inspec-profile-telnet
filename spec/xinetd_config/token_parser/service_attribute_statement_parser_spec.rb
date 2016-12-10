@@ -52,6 +52,18 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
         ]
 
         assert_tokens_match(expected_tokens, tokens)
+
+        tokens = parser.tokenize('flags = INTERCEPT FOO NORETRY', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::FlagsAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::FlagsValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::FlagsValueToken,
+        ]
+
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "disable" service attribute as invalid' do
         tokens = parser.tokenize('disable = foo', tokens_list)
