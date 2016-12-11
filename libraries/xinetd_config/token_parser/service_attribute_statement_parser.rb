@@ -68,16 +68,27 @@ module XinetdConfig
                     end
                   end
                 when Token::ServiceAttributes::GroupAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupValueToken.new(line)
+                  if split_line.shift
+                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupValueToken.new(line)
+                    split_line.each do
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
+                  end
                 when Token::ServiceAttributes::GroupsAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupsValueToken.new(line)
                 when Token::ServiceAttributes::IdAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::IdValueToken.new(line)
                 when Token::ServiceAttributes::InstancesAttributeToken::TOKEN
-                  if service_attribute_value == 'UNLIMITED' || is_numeric?(service_attribute_value)
-                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InstancesValueToken.new(line)
-                  else
-                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                  service_attribute_value = split_line.shift
+                  if service_attribute_value
+                    if service_attribute_value == 'UNLIMITED' || is_numeric?(service_attribute_value)
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InstancesValueToken.new(line)
+                    else
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
+                    split_line.each do
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   end
                 when Token::ServiceAttributes::InterfaceAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InterfaceValueToken.new(line)
@@ -106,10 +117,16 @@ module XinetdConfig
                 when Token::ServiceAttributes::MdnsAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::MdnsValueToken.new(line)
                 when Token::ServiceAttributes::NiceAttributeToken::TOKEN
-                  if is_numeric?(service_attribute_value)
-                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NiceValueToken.new(line)
-                  else
-                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                  service_attribute_value = split_line.shift
+                  if service_attribute_value
+                    if is_numeric?(service_attribute_value)
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NiceValueToken.new(line)
+                    else
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
+                    split_line.each do
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   end
                 when Token::ServiceAttributes::NoAccessAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NoAccessValueToken.new(line)
@@ -152,12 +169,14 @@ module XinetdConfig
                 when Token::ServiceAttributes::ServerAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerValueToken.new(line)
                 when Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
-                  split_line.each do |type_value|
-                    if %w(stream dgram raw seqpacket).include? type_value
-                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken.new(line)
-                    else
-                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
-                    end
+                  if %w(stream dgram raw seqpacket).include? service_attribute_value
+                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken.new(line)
+                  else
+                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                  end
+                  split_line.shift
+                  split_line.each do
+                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
                   end
                 when Token::ServiceAttributes::TypeAttributeToken::TOKEN
                   split_line.each do |type_value|
@@ -170,13 +189,22 @@ module XinetdConfig
                 when Token::ServiceAttributes::UmaskAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UmaskValueToken.new(line)
                 when Token::ServiceAttributes::UserAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UserValueToken.new(line)
+                  if split_line.shift
+                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UserValueToken.new(line)
+                    split_line.each do
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
+                  end
                 when Token::ServiceAttributes::V6OnlyAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::V6OnlyValueToken.new(line)
                 when Token::ServiceAttributes::WaitAttributeToken::TOKEN
                   if %w(yes no).include? service_attribute_value
                     tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::WaitValueToken.new(line)
                   else
+                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                  end
+                  split_line.shift
+                  split_line.each do
                     tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
                   end
                 end

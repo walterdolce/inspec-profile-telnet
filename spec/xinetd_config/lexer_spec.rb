@@ -951,7 +951,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  group = 123
+  group = root
 }
 CONTENT
         ).produces [
@@ -1480,7 +1480,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  user = RPC
+  user = root
 }
 CONTENT
         ).produces [

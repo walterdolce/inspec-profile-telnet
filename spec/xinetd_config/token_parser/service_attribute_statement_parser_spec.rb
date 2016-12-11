@@ -122,11 +122,36 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
         assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "wait" service attribute as invalid' do
-        tokens = parser.tokenize('wait = foo', tokens_list)
+        tokens = parser.tokenize('wait = yes foo', tokens_list)
         expected_tokens = [
           XinetdConfig::Token::EntryBeginToken,
           XinetdConfig::Token::ServiceAttributes::WaitAttributeToken,
           XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::WaitValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+        ]
+
+        assert_tokens_match(expected_tokens, tokens)
+      end
+      it 'tokenizes not supported values assigned to the "user" service attribute as invalid' do
+        tokens = parser.tokenize('user = root foo', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::UserAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::UserValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+        ]
+
+        assert_tokens_match(expected_tokens, tokens)
+      end
+      it 'tokenizes not supported values assigned to the "group" service attribute as invalid' do
+        tokens = parser.tokenize('group = root foo', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::GroupAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::GroupValueToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
 
@@ -142,6 +167,17 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
         ]
 
         assert_tokens_match(expected_tokens, tokens)
+
+        tokens = parser.tokenize('instances = 1 foo', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::InstancesAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InstancesValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+        ]
+
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "nice" service attribute as invalid' do
         tokens = parser.tokenize('nice = foo', tokens_list)
@@ -149,6 +185,17 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::EntryBeginToken,
           XinetdConfig::Token::ServiceAttributes::NiceAttributeToken,
           XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+        ]
+
+        assert_tokens_match(expected_tokens, tokens)
+
+        tokens = parser.tokenize('nice = -10 foo', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::NiceAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::NiceValueToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
 
