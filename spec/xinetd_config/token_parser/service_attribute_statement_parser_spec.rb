@@ -75,6 +75,17 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
         ]
 
         assert_tokens_match(expected_tokens, tokens)
+
+        tokens = parser.tokenize('disable = yes foo', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::DisableAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DisableValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+        ]
+
+        assert_tokens_match(expected_tokens, tokens)
       end
       it 'tokenizes not supported values assigned to the "socket_type" service attribute as invalid' do
         tokens = parser.tokenize('socket_type = foo', tokens_list)
@@ -82,6 +93,29 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
           XinetdConfig::Token::EntryBeginToken,
           XinetdConfig::Token::ServiceAttributes::SocketTypeAttributeToken,
           XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+        ]
+
+        assert_tokens_match(expected_tokens, tokens)
+
+        tokens = parser.tokenize('socket_type = stream foo', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::SocketTypeAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+        ]
+
+        assert_tokens_match(expected_tokens, tokens)
+      end
+      it 'tokenizes not supported values assigned to the "protocol" service attribute as invalid' do
+        tokens = parser.tokenize('protocol = tcp foo', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::ProtocolAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ProtocolValueToken,
           XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
         ]
 

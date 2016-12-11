@@ -21,12 +21,12 @@ module XinetdConfig
           
           if is_service_attribute(tokens_list.last.class, service_attribute)
             tokens_list << @token_factory.create(service_attribute)
-
+            
             assignment_operator = split_line.shift
             if assignment_operator
               tokens_list << @token_factory.create(assignment_operator)
             end
-
+            
             unless split_line.empty?
               service_attribute_value = split_line.first
               if Token::SERVICE_ATTRIBUTE_TOKENS.include? service_attribute
@@ -50,10 +50,12 @@ module XinetdConfig
                 when Token::ServiceAttributes::DenyTimeAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DenyTimeValueToken.new(line)
                 when Token::ServiceAttributes::DisableAttributeToken::TOKEN
-                  if %w(yes no).include? service_attribute_value
-                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DisableValueToken.new(line)
-                  else
-                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                  split_line.each do |flags_value|
+                    if %w(yes no).include? flags_value
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::DisableValueToken.new(line)
+                    else
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   end
                 when Token::ServiceAttributes::EnvAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::EnvValueToken.new(line)
@@ -121,6 +123,10 @@ module XinetdConfig
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::PortValueToken.new(line)
                 when Token::ServiceAttributes::ProtocolAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ProtocolValueToken.new(line)
+                  split_line.shift
+                  split_line.each do
+                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                  end
                 when Token::ServiceAttributes::RedirectAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::RedirectValueToken.new(line)
                 when Token::ServiceAttributes::RLimitAsAttributeToken::TOKEN
@@ -146,10 +152,12 @@ module XinetdConfig
                 when Token::ServiceAttributes::ServerAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerValueToken.new(line)
                 when Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
-                  if %w(stream dgram raw seqpacket).include? service_attribute_value
-                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken.new(line)
-                  else
-                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                  split_line.each do |type_value|
+                    if %w(stream dgram raw seqpacket).include? type_value
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken.new(line)
+                    else
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
                   end
                 when Token::ServiceAttributes::TypeAttributeToken::TOKEN
                   split_line.each do |type_value|

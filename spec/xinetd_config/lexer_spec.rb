@@ -1240,7 +1240,7 @@ CONTENT
         assert_tokenization_of(<<CONTENT
 service telnet
 {
-  protocol = foo
+  protocol = tcp
 }
 CONTENT
         ).produces [
