@@ -19,6 +19,20 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
   end
 
   describe 'Tokenizing service attribute values' do
+    describe 'Tokenizing valid values' do
+      it 'tokenizes values assigned to the "server_args" service attribute' do
+        tokens = parser.tokenize('server_args = baz foo', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::ServerArgsAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerArgsValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerArgsValueToken,
+        ]
+    
+        assert_tokens_match(expected_tokens, tokens)
+      end
+    end
     describe 'Tokenizing invalid values' do
       it 'tokenizes not supported values assigned to the "type" service attribute as invalid' do
         tokens = parser.tokenize('type = FOO', tokens_list)
@@ -201,6 +215,31 @@ describe XinetdConfig::Token::Parser::ServiceAttributeStatementParser do
 
         assert_tokens_match(expected_tokens, tokens)
       end
+      it 'tokenizes not supported values assigned to the "server" service attribute as invalid' do
+        tokens = parser.tokenize('server = telnet foo', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::ServerAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+        ]
+
+        assert_tokens_match(expected_tokens, tokens)
+      end
+      it 'tokenizes not supported values assigned to the "libwrap" service attribute as invalid' do
+        tokens = parser.tokenize('libwrap = foo bar', tokens_list)
+        expected_tokens = [
+          XinetdConfig::Token::EntryBeginToken,
+          XinetdConfig::Token::ServiceAttributes::LibwrapAttributeToken,
+          XinetdConfig::Token::Operators::AssignmentToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LibwrapValueToken,
+          XinetdConfig::Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken,
+        ]
+
+        assert_tokens_match(expected_tokens, tokens)
+      end
+      #TODO implement tokenization of not supported values starting from "only_from" going down from docs page https://linux.die.net/man/5/xinetd.conf
       it 'tokenizes not supported values assigned to the "access_times" service attribute as invalid' do
         tokens = parser.tokenize('access_times = foo', tokens_list)
         expected_tokens = [

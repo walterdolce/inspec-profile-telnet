@@ -93,7 +93,13 @@ module XinetdConfig
                 when Token::ServiceAttributes::InterfaceAttributeToken::TOKEN
                   tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::InterfaceValueToken.new(line)
                 when Token::ServiceAttributes::LibwrapAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LibwrapValueToken.new(line)
+                  service_attribute_value = split_line.shift
+                  if service_attribute_value
+                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LibwrapValueToken.new(line)
+                    split_line.each do
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
+                  end
                 when Token::ServiceAttributes::LogOnFailureAttributeToken::TOKEN
                   if %w(HOST USERID ATTEMPT).include? service_attribute_value
                     tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::LogOnFailureValueToken.new(line)
@@ -165,9 +171,17 @@ module XinetdConfig
                     tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
                   end
                 when Token::ServiceAttributes::ServerArgsAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerArgsValueToken.new(line)
+                  split_line.each do
+                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerArgsValueToken.new(line)
+                  end
                 when Token::ServiceAttributes::ServerAttributeToken::TOKEN
-                  tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerValueToken.new(line)
+                  service_attribute_value = split_line.shift
+                  if service_attribute_value
+                    tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::ServerValueToken.new(line)
+                    split_line.each do
+                      tokens_list << Token::ServiceAttributes::ServiceAttributeValues::InvalidValueToken.new(line)
+                    end
+                  end
                 when Token::ServiceAttributes::SocketTypeAttributeToken::TOKEN
                   if %w(stream dgram raw seqpacket).include? service_attribute_value
                     tokens_list << Token::ServiceAttributes::ServiceAttributeValues::TypeAttributeValues::SocketTypeValueToken.new(line)
